@@ -120,7 +120,8 @@
    global EL_doAnl               "$EL_do/Analysis" 
 
    *Output sub-folder globals
-   global EL_out                 "$EL/Output" 
+  *global EL_out                 "$EL/Output" 	// this is the dropbox path
+   global EL_out                 "/Users/`dir'/Documents/GitHub/sdi-health/Datawork/endline/Output" 	// this is the GitHub repo path
    global EL_outRaw              "$EL_out/Raw" 
    global EL_outFin              "$EL_out/Final" 
 
