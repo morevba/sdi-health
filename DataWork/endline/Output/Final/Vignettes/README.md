@@ -17,5 +17,3 @@
 ![](treat_percentile_lowess_2.png)
 
 ![](treat_scatter_knowledge.png)
-
-![](Regression_Results.csv)
