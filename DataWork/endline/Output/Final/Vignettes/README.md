@@ -1,27 +1,13 @@
 # Results
 
-[![](img/state.png)](data/state.csv)
 
-[![](img/cases-state.png)](data/cases-state.csv)
 
-[![](img/cascade-type.png)](data/cascade-type.csv)
+![](prov_knowledge.png)
 
-[![](img/cases-fac_type.png)](data/cases-fac_type.csv)
+![](prov_mededu.png)
 
-[![](img/treat-state.png)](data/treat-state.csv)
+![](cadre_knowledge.png)
 
-[![](img/treat-fac_type.png)](data/treat-fac_type.csv)
+![](scatter_cadre_knowledge.png)
 
-[![](img/closures.png)](data/closures.csv)
 
-[![](img/reporting.png)](data/reporting.csv)
-
-![](img/costs.png)
-
-![](img/telemedicine.png)
-
-![](img/telemedicine2.png)
-
-[![](img/telemedicine3.png)](img/telemedicine3.csv)
-
-[![](img/telemedicine4.png)](img/telemedicine4.csv)
