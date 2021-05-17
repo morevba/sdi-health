@@ -22,7 +22,8 @@
 		global sectionC		0 // table - Providers survey 
 		global sectionD		0 // table - Providers identity survey 
 		global sectionE		0 // table - diagnostic knowledge summary 
-		global sectionF		1 // table - treatment knowledge summary 
+		global sectionF		0 // table - treatment knowledge summary 
+		global sectionG		1 // table - descriptive stats of providers 
 		
 /*****************************
 		Provider level   
@@ -702,9 +703,9 @@ if $sectionE {
 	file close 	descTable		
 	}			
  
-/****************************************
-Table of treatment knowledge summary 
-*****************************************/
+/******************************************************************************
+			Table of treatment knowledge summary 
+******************************************************************************/
 if $sectionF {	
  	
 	*Code country year variable 
@@ -887,6 +888,109 @@ if $sectionF {
 	"Asphyxia&			    {Gave In. Antibiotics}&  	{`CC1r'\%}&	{`CC2r'\%}& {`CC3r'\%}& {`CC4r'\%}&	{`CC5r'\%}&	{`CC6r'\%}&	{`CC7r'\%}&	{`CC8r'\%}&	{`CC9r'\%}&	{`CC10r'\%}& {`CC11r'\%}& {`CC12r'\%}&	{`CC13r'\%}\\" _n ///
 	" &		      			{Number of Tests Ordered}&  {`DD1r'}&	{`DD2r'}&   {`DD3r'}&   {`DD4r'}&	{`DD5r'}&	{`DD6r'}&	{`DD7r'}&	{`DD8r'}&	{`DD9r'}&	{`DD10r'}&	 {`DD11r'}&	  {`DD12r'}&	{`DD13r'}\\" _n ///
 	"\hline\hline" _n ///
+	"\multicolumn{15}{l}{\footnotesize Certain countries have missing data for some of the vignettes}\\" _n ///
+	"\end{tabular}"
+	file close 	descTable		
+	}			
+	
+/******************************************************************************
+			Table of descriptive stats of providers 
+******************************************************************************/
+if $sectionG {	
+ 	
+	*Code country year variable 
+	encode cy, gen(cy_code)
+	
+	*This creates the numbers for each row - Number of health providers for each row  
+	forvalues num = 1/13 {
+		
+		sum 	percent_correctd if skip_diarrhea == 0 & cy_code == `num'	// This creates the number stats for row 1
+		local 	A`num'r = string(`r(mean)',"%9.1f") 
+		di		`A`num'r'
+		
+		sum 	percent_antibiotict if skip_diarrhea == 0 & cy_code == `num'	// This creates the number stats for row 2
+		local 	C`num'r = string(`r(mean)',"%9.1f") 
+		di		`C`num'r'
+		
+		sum 	total_tests if skip_diarrhea == 0	& cy_code == `num'			// This creates the number stats for row 3
+		local 	D`num'r = string(`r(mean)',"%9.2f") 
+		di		`D`num'r'
+	}
+	
+	forvalues num = 1/13 {
+		
+		sum 	percent_correctd if skip_pneumonia == 0 & cy_code == `num'	// This creates the number stats for row 4
+		local 	E`num'r = string(`r(mean)',"%9.1f") 
+		di		`E`num'r'
+		
+		sum 	percent_correctt if skip_pneumonia == 0 & cy_code == `num'	// This creates the number stats for row 5
+		local 	F`num'r = string(`r(mean)',"%9.1f")  
+		di		`F`num'r'
+		
+		sum 	percent_antibiotict if skip_pneumonia == 0 & cy_code == `num'	// This creates the number stats for row 6
+		local 	G`num'r = string(`r(mean)',"%9.1f") 
+		di		`G`num'r'
+	}
+	
+	forvalues num = 1/13 {
+		
+		sum 	percent_correctd if skip_diabetes == 0 & cy_code == `num'		// This creates the number stats for row 7
+		local 	I`num'r = string(`r(mean)',"%9.1f") 
+		di		`I`num'r'
+		
+		sum 	percent_antibiotict if skip_diabetes == 0 & cy_code == `num'	// This creates the number stats for row 8
+		local 	K`num'r = string(`r(mean)',"%9.1f") 
+		di		`K`num'r'
+		
+		sum 	total_tests if skip_diabetes == 0 & cy_code == `num'			// This creates the number stats for row 9
+		local 	L`num'r = string(`r(mean)',"%9.2f") 
+		di		`L`num'r'
+	}
+
+	forvalues num = 1/13 {
+		
+		sum 	percent_correctd if skip_tb == 0 & cy_code == `num'		// This creates the number stats for row 10
+		local 	M`num'r = string(`r(mean)',"%9.1f")
+		di		`M`num'r'
+		
+		sum 	percent_correctt if skip_tb == 0 & cy_code == `num'		// This creates the number stats for row 11
+		local 	N`num'r = string(`r(mean)',"%9.1f")
+		di		`N`num'r'
+		
+		sum 	percent_antibiotict if skip_tb == 0 & cy_code == `num'	// This creates the number stats for row 12
+		local 	O`num'r = string(`r(mean)',"%9.1f") 
+		di		`O`num'r'
+	}
+
+	
+	
+	
+	
+	*Create and build out latex table 
+	file open 	descTable using "$EL_out/Final/Tex files/prov_summ.tex", write replace
+	file write 	descTable ///
+	"\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}" _n ///
+	"\begin{tabular}{l*{14}{c}}" _n ///
+	"\hline\hline" _n ///
+	"         &\multicolumn{1}{c}{" "}&\multicolumn{1}{c}{Guinea Bissau}&\multicolumn{1}{c}{Kenya 2012}&\multicolumn{1}{c}{Kenya 2018}&\multicolumn{1}{c}{Madagascar}&\multicolumn{1}{c}{Mozambique}&\multicolumn{1}{c}{Malawi}&\multicolumn{1}{c}{Niger}&\multicolumn{1}{c}{Nigeria}&\multicolumn{1}{c}{Sierra Leone}&\multicolumn{1}{c}{Togo}&\multicolumn{1}{c}{Tanzania 2014}&\multicolumn{1}{c}{Tanzania 2016}&\multicolumn{1}{c}{Uganda}&\\" _n ///
+	"\hline" _n ///
+	"Total Surveyed&			{`A1r'\%}&	{`A2r'\%}&	{`A3r'\%}&	{`A4r'\%}&	{`A5r'\%}&	{`A6r'\%}&	{`A7r'\%}&	{`A8r'\%}&	{`A9r'\%}&	{`A10r'\%}&	{`A11r'\%}&	{`A12r'\%}&	{`A13r'\%}\\" _n ///
+	" &   \\" _n ///
+	"Works at rural facility&	{`C1r'\%}&	{`C2r'\%}&  {`C3r'\%}&  {`C4r'\%}&	{`C5r'\%}&	{`C6r'\%}&	{`C7r'\%}&	{`C8r'\%}&	{`C9r'\%}&	{`C10r'\%}&	{`C11r'\%}&	{`C12r'\%}&	{`C13r'\%}\\" _n ///
+	"Works at public facility&  {`D1r'}&	{`D2r'}&    {`D3r'}&  	{`D4r'}&	{`D5r'}&	{`D6r'}&	{`D7r'}&	{`D8r'}&	{`D9r'}&	{`D10r'}&	{`D11r'}&	{`D12r'\%}&	{`D13r'}\\" _n ///
+	" &   \\" _n ///
+	"Works at hospital&  		{`E1r'\%}&	{`E2r'\%}&  {`E3r'\%}&  {`E4r'\%}&	{`E5r'\%}&	{`E6r'\%}&	{`E7r'\%}&	{`E8r'\%}&	{`E9r'\%}&	{`E10r'\%}&	{`E11r'\%}&	{`E12r'\%}&	{`E13r'\%}\\" _n ///
+	"Works at health center&  	{`F1r'\%}&	{`F2r'\%}&	{`F3r'\%}&	{`F4r'\%}&	{`F5r'\%}&	{`F6r'\%}&	{`F7r'\%}&	{`F8r'\%}&	{`F9r'\%}&	{`F10r'\%}&	{`F11r'\%}&	{`F12r'\%}&	{`F13r'\%}\\" _n ///
+	"Works at health post&  	{`G1r'\%}&	{`G2r'\%}&  {`G3r'\%}&  {`G4r'\%}&	{`G5r'\%}&	{`G6r'\%}&	{`G7r'\%}&	{`G8r'\%}&	{`G9r'\%}&	{`G10r'\%}&	{`G11r'\%}&	{`G12r'\%}&	{`G13r'\%}\\" _n ///
+	" &   \\" _n ///
+	"Is medical officer&  		{`I1r'\%}&	{`I2r'\%}&  {`I3r'\%}&  {`I4r'\%}&	{`I5r'\%}&	{`I6r'\%}&	{`I7r'\%}&	{`I8r'\%}&	{`I9r'\%}&	{`I10r'\%}&	{`I11r'\%}&	{`I12r'\%}&	{`I13r'\%}\\" _n ///
+	"Is nurse&  				{`K1r'\%}&	{`K2r'\%}&  {`K3r'\%}&  {`K4r'\%}&	{`K5r'\%}&	{`K6r'\%}&	{`K7r'\%}&	{`K8r'\%}&	{`K9r'\%}&	{`K10r'\%}&	{`K11r'\%}&	{`K12r'\%}&	{`K13r'\%}\\" _n ///
+	"Is other profession& 	 	{`L1r'}&	{`L2r'}&    {`L3r'}&    {`L4r'}&	{`L5r'}&	{`L6r'}&	{`L7r'}&	{`L8r'}&	{`L9r'}&	{`L10r'}&	{`L11r'}&	{`L12r'}&	{`L13r'}\\" _n ///
+	"&   \\" _n ///
+	"Has advanced med. ed.&  	{`M1r'\%}&	{`M2r'\%}&  {`M3r'\%}&  {`M4r'\%}&	{`M5r'\%}&	{`M6r'\%}&	{`M7r'\%}&	{`M8r'\%}&	{`M9r'\%}&	{`M10r'\%}&	{`M11r'\%}&	{`M12r'\%}&	{`M13r'\%}\\" _n ///
+	"Has diploma&  				{`N1r'\%}&	{`N2r'\%}&  {`N3r'\%}&  {`N4r'\%}&	{`N5r'\%}&	{`N6r'\%}&	{`N7r'\%}&	{`N8r'\%}&	{`N9r'\%}&	{`N10r'\%}&	{`N11r'\%}&	{`N12r'\%}&	{`N13r'\%}\\" _n ///
+	"Has certificate&  			{`O1r'\%}&	{`O2r'\%}&  {`O3r'\%}&  {`O4r'\%}&	{`O5r'\%}&	{`O6r'\%}&	{`O7r'\%}&	{`O8r'\%}&	{`O9r'\%}&	{`O10r'\%}&	{`O11r'\%}&	{`O12r'\%}&	{`O13r'\%}\\" _n ///
+	"\hline" _n ///
 	"\multicolumn{15}{l}{\footnotesize Certain countries have missing data for some of the vignettes}\\" _n ///
 	"\end{tabular}"
 	file close 	descTable		
