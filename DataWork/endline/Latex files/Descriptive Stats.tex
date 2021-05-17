@@ -1,0 +1,438 @@
+
+% Load packages: making changes here can cause errors.
+\documentclass{article}                 % Define document class. Shouldn't change.
+\usepackage{booktabs}       
+\usepackage{tabularx}   
+\usepackage{import}                     % This package allows us to import files. 
+\usepackage{multirow}
+\usepackage{adjustbox}                  % This package allows you to adapt table and figure sizes to fit the page and is required by iebaltab
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage{subcaption}                 % This packages is used to create subfigures
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{setspace}    
+\usepackage{float}    
+\doublespacing                          % Uncomment to use double spacing
+\usepackage{indentfirst}	            % Indents the fist paragraph of each section
+\usepackage{parskip}                    % This packages sets the spacing between two paragraphs
+\setlength{\parskip}{.5\baselineskip}   % Define spacing between two paragraphs
+\usepackage{pdflscape}
+\usepackage{afterpage}
+\usepackage{capt-of}% or use the larger `caption` package
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{graphicx}
+\onehalfspacing
+\usepackage{setspace}
+\usepackage[english]{babel}
+\usepackage{pdfpages}
+\usepackage{dcolumn}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pagecolor}
+\usepackage{sectsty}
+
+
+
+\title{\color{NavyBlue} Service Delivery Indicators (SDI)}
+\author{\color{NavyBlue}Development Research Group (DECRG)}
+
+
+\begin{document}
+	
+	\maketitle        
+	\sectionfont{\color{NavyBlue}}
+	
+
+
+	\section*{Descriptive Results}
+	
+	Using SDI surveys of 9,712 health facilities and 87,155 healthcare providers in 11 Sub-Saharan countries, this paper provides a descriptive analysis of the healthcare landscape in these Sub-Saharan African countries. 
+
+ 
+	\section*{Facility Level Results}
+	
+	Table 1 depicts the number of facilities by country based on the three different facility types. Kenya and Nigeria lead with the largest number of facilities regardless of facility type. 
+	
+			\begin{table}[H]
+				\centering
+					\caption{Facility Type by Country}
+					\input{"../Output/Final/Tex files/Des_table_fl.tex"}
+			\end{table}
+		
+	Figure 1 displays the leading facility type within each country and as one can see health centers are the most common type of health facilities across all the countries. 	
+		
+			\begin{figure}[H] 
+				\centering
+					\caption{Facility Type  by Country} 
+					\includegraphics[width=\textwidth]{"../Output/Final/Clinic_all"}
+			\end{figure}
+		
+	Figure 2 disaggregates facility type by rural and urban regions within each country.  
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Facility Type  by Region} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Clinic_reg"}
+			\end{figure}
+	
+	% \begin{landscape}
+	%	\thispagestyle{empty}
+	%	\centering  
+		%	\begin{table}
+			%	\centering
+			%	\caption{Facility Type Descriptive Stats}
+				%	\begin{adjustbox}{max width=1.4\textwidth}
+		%				\input{"../Output/Final/Des_table_fl_2.tex"}
+					%	\end{adjustbox}	
+		%	\end{table}
+	    % \end{landscape}	
+
+	
+	\section*{Provider Level Results}
+	
+	The results in this section displays all the descriptive results of all the health providers that the SDI team were able to interview on their visits to rural and urban health facilities across the 11 countries in Sub-Saharan Africa. One will notice that majority of the health providers are female and are predominately nurses or other health care professionals.
+	
+	\subsection{Gender Breakdown}
+	
+	Table 2 shows the gender breakdown of health providers in each country and the average age. Majority of the health providers are below the age of 40 and are mostly female. 
+	
+			\begin{table}[H]
+				\centering
+				\caption{Provider Gender \& Age Descriptive Stats}
+				\input{"../Output/Final/Tex files/Des_table_pl.tex"}
+			\end{table}
+		
+ 	Figure 3 depicts the gender breakdown by facility type. 	
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Staff Occupation  by Facility Type} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Gender_fl"}
+			\end{figure}
+		
+	Table 3 displays the gender breakdown at hospitals. 	
+		
+			\begin{table}[H]
+				\centering
+				\caption{Provider Gender \& Age Descriptive Stats at Hospitals}
+				\input{"../Output/Final/Tex files/Des_table_pl_hospital.tex"}
+			\end{table}
+		
+	Table 4 shows the gender breakdown at health centers. 
+		
+			\begin{table}[H]
+				\centering
+				\caption{Provider Gender \& Age Descriptive Stats at Health Centers}
+				\input{"../Output/Final/Tex files/Des_table_pl_healthcenter.tex"}
+			\end{table}
+		
+	Table 5 shows the gender breakdown at health posts.
+		
+			\begin{table}[H]
+				\centering
+				\caption{Provider Gender \& Age Descriptive Stats at Health Posts}
+				\input{"../Output/Final/Tex files/Des_table_pl_healthpost.tex"}
+			\end{table}
+		
+	\subsection{Age Ranges}		
+	
+	Figures 4,5, 6 \& 7 depicts histograms of the ages of doctors and nurses within in each country.
+	
+			\begin{figure}[H] 
+				\centering
+				\caption{Age of Staff Occupation  by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Hist_age_1"}
+			\end{figure}
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Age of Staff Occupation  by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Hist_age_2"}
+			\end{figure}
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Age of Staff Occupation  by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Hist_age_3"}
+			\end{figure}
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Age of Staff Occupation  by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Hist_age_4"}
+			\end{figure}
+			
+			\begin{figure}[H] 
+				\centering
+				\caption{Age of Providers by Gender} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Per_providers"}
+			\end{figure}
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Age of Providers by Gender and Region} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Per_providers_region"}
+			\end{figure}	
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Age of Providers by Gender and Occupation} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Per_providers_occ"}
+			\end{figure}
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Fraction of Female Doctors by Age} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Line plots/med_fem_frac"}
+			\end{figure}			
+			
+			\begin{figure}[H] 
+				\centering
+				\caption{Occupation by Age} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Line plots/occupation_gender"}
+			\end{figure}	
+
+
+	\subsection*{Occupation Results}
+	
+	The results in this section shows the primary occupation status of all the health providers that were interviewed in each country. There are three occupation categories; doctors, nurses, and other. The other category encompasses medical (nursing) assistants, patient aides, matrons, medical aides, radiographers, physiotherapists, environmental health officers, health surveillance assistants, and pharmacists 
+	
+	
+	Table 6 displays the occupation status of health providers by country.
+	
+			\begin{table}[H]
+				\centering
+				\caption{Provider Occupation}
+				\input{"../Output/Final/Tex files/Des_table_pl_2.tex"}
+			\end{table}
+		
+	Table 7 shows the occupation status of all female health providers by country 
+		
+			\begin{table}[H]
+				\centering
+				\caption{Provider Occupation - Female Providers Only}
+				\input{"../Output/Final/Tex files/Des_table_pl_occ_female.tex"}
+			\end{table}
+		
+	Table 8 depicts the occupation status of all male health providers by country 	
+		
+			\begin{table}[H]
+				\centering
+				\caption{Provider Occupation - Male Providers Only}
+				\input{"../Output/Final/Tex files/Des_table_pl_occ_male.tex"}
+			\end{table}
+		
+	Figure 8 indicates the leading occupation status by country. 	
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Staff Occupation  by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Staff_all"}
+			\end{figure}
+		
+	Figure 9 depicts the occupation status of health providers by region within each country.	
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Staff Occupation  by Region} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Staff_reg"}
+			\end{figure}
+		
+	Figure 10 depicts the occupation status of health providers by region within each country.
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Staff Occupation  by Facility Type} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Staff_fl"}
+			\end{figure}
+			
+	\section*{Poverty Rate Estimates}
+	
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Clinics that have a Medical Officer} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Poverty_medone_allcountries"}
+			\end{figure}
+		
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Clinics that have a Medical Officer by Region} 
+				\includegraphics[width=\textwidth]{"../Output/Final/Poverty_medone_region"}
+			\end{figure}
+	
+	
+	The figures below indicate the correlation between poverty rate and the share of clinics that have a medical officer.
+	
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Clinics that have a Medical Officer by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_1_medone"}
+			\end{figure}
+			
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Clinics that have a Medical Officer by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_2_medone"}
+			\end{figure}
+			
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Clinics that have a Medical Officer by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_3_medone"}
+			\end{figure}
+		
+	The figures below indicate the correlation between poverty rate and the share of clinics that have a nurse or paramedical staff.
+	
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Clinics that have a Nurse by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_1_mednurs"}
+			\end{figure}
+			
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Clinics that have a Nurse by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_2_mednurs"}
+			\end{figure}
+			
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Clinics that have a Nurse by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_3_mednurs"}
+			\end{figure}	
+	
+	The figures below indicate the correlation between poverty rate and the share of medical providers per facility in each country.
+	
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Medical Providers by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_1"}
+			\end{figure}
+			
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Medical Providers by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_2"}
+			\end{figure}
+			
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Medical Providers by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_3"}
+			\end{figure}
+	
+	The figures below indicate the correlation between poverty rate and the share of medical officers per facility in each country.
+	
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Medical Officers by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_1_medoff"}
+			\end{figure}
+			
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Medical Officers by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_2_medoff"}
+			\end{figure}
+			
+			\begin{figure}[H] 
+				\centering
+				\caption{Share of Medical Officers by Country} 
+				\includegraphics[width=\textwidth]{"../Output/Final/poverty_fl_3_medoff"}
+			\end{figure}
+		
+		\vspace{10cm}
+		
+	\subsection*{Regression Estimates}	
+		
+		The regression tables below report the OLS regression estimates of poverty rate at the \$1.9 rate on the share of health facilities that have a medical officer in a given health facility.
+	
+			\begin{table}[H]
+				\centering
+				\caption{Regression Estimates of Poverty Rate on Share of Health Facilities with a Medical Officer - All Countries}
+					\begin{adjustbox}{max width=\textwidth}
+						\input{"../Output/Final/Tex files/Poverty_reg.tex"}
+					\end{adjustbox}	
+			\end{table}	
+		
+			\begin{table}[H]
+				\centering
+				\caption{Regression Estimates of Poverty Rate on Share of Health Facilities with a Medical Officer}
+						\begin{adjustbox}{max width=\textwidth}
+							\input{"../Output/Final/Tex files/Poverty_reg_A.tex"}
+						\end{adjustbox}	
+			\end{table}	
+
+			\begin{table}[H]
+				\centering
+				\caption{Regression Estimates of Poverty Rate on Share of Health Facilities with a Medical Officer}
+						\begin{adjustbox}{max width=\textwidth}
+							\input{"../Output/Final/Tex files/Poverty_reg_B.tex"}
+						\end{adjustbox}	
+			\end{table}	
+		
+			\begin{table}[H]
+				\centering
+				\caption{Regression Estimates of Poverty Rate on Share of Health Facilities with a Medical Officer}
+						\begin{adjustbox}{max width=\textwidth}
+							\input{"../Output/Final/Tex files/Poverty_reg_C.tex"}
+						\end{adjustbox}	
+			\end{table}	
+		
+			\begin{table}[H]
+				\centering
+				\caption{Regression Estimates of Poverty Rate on Share of Health Facilities with a Medical Officer}
+					\begin{adjustbox}{max width=\textwidth}
+						\input{"../Output/Final/Tex files/Poverty_reg_D.tex"}
+					\end{adjustbox}	
+			\end{table}	
+		
+			\subsection*{Vignettes}	
+			
+				\begin{table}[H]
+				\centering
+				\caption{Facility Demography Summary}
+					\begin{adjustbox}{max width=\textwidth}
+						\input{"../Output/Final/Tex files/vig_table_fac.tex"}
+					\end{adjustbox}	
+				\end{table}	
+
+				\begin{table}[H]
+					\centering
+					\caption{Provider Demography Summary}
+					\begin{adjustbox}{max width=\textwidth}
+						\input{"../Output/Final/Tex files/vig_table_prov.tex"}
+					\end{adjustbox}	
+				\end{table}	
+
+			\begin{table}[H]
+					\centering
+					\caption{Provider Demography Summary}
+					\begin{adjustbox}{max width=\textwidth}
+						\input{"../Output/Final/Tex files/vig_table_prov_2.tex"}
+					\end{adjustbox}	
+				\end{table}	
+			
+			\vspace{80mm}
+			
+			\begin{table}[H]
+					\centering
+					\caption{Diagnostic Knowledge Summary}
+						\begin{adjustbox}{max width=\textwidth}
+							\input{"../Output/Final/Tex files/diag_summ.tex"}
+						\end{adjustbox}	
+					\end{table}	
+				
+			\begin{table}[H]
+					\centering
+					\caption{Treatment Knowledge Summary}
+					\begin{adjustbox}{max width=\textwidth}
+						\input{"../Output/Final/Tex files/treat_summ.tex"}
+					\end{adjustbox}	
+			\end{table}	
+				
+
+\end{document}

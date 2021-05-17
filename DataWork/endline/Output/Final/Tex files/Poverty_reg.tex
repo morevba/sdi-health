@@ -1,0 +1,19 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{4}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}\\
+                    &\multicolumn{1}{c}{Simple}&\multicolumn{1}{c}{Fixed Effects}&\multicolumn{1}{c}{Rural/Urban}&\multicolumn{1}{c}{All Effects}\\
+\hline
+Poverty rate at 1.9 &      -0.172** &      -0.101   &      -0.183***&      -0.047   \\
+                    &     (0.068)   &     (0.067)   &     (0.060)   &     (0.061)   \\
+Hospitals           &               &               &       0.318***&       0.349***\\
+                    &               &               &     (0.024)   &     (0.023)   \\
+Urban/Rural Facilities (1=Rural)&               &               &      -0.186***&      -0.206***\\
+                    &               &               &     (0.026)   &     (0.021)   \\
+\hline
+Observations        &         744   &         744   &         682   &         682   \\
+R-squared           &        0.01   &        0.27   &        0.24   &        0.51   \\
+\hline\hline
+\end{tabular}
+}
