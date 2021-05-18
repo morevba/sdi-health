@@ -523,8 +523,8 @@ if $sectionH {
 		title("Percent of Conditions Treated Correctly", size(medium) justification(left) color(black) span pos(11)) ///
 		note("Notes: These plots shows the percent of providers that are able to correctly treat a medical condition as the competence percentile of providers in each country "" increases. The percent of conditions treated correctly is defined as the total number of treatments that a provider got correct divided by the total number of "" medical vignettes he/she participated in. The rank of provider in country is calculated by taking the provider knowledge scores in each country and creating "" percentiles of the scores.", size(vsmall)) 
 	graph export "$EL_out/Final/Vignettes/treat_percentile_lowess_2.png", replace as(png)	
-}		
- 
+}		 
+
 /****************************************************************************
  			Create scatter line graph for provider age 
 *****************************************************************************/
@@ -532,14 +532,13 @@ if $sectionI {
 	
 	replace provider_age1 = . if provider_age1>=80 | provider_age1<=19
 
-		(lpoly percent_correctt provider_age1), 																			///
+	lpoly percent_correctt provider_age1, 																					///
 		degree(1) jitter(10) m(x) mc(black%10) lineopts(lw(thick)) graphregion(color(white)) 								///
 		title("Percent of Conditions Treated Correctly", size(medium) justification(left) color(black) span pos(11)) 		///
 		xtitle("Provider's age  {&rarr}", placement(left) justification(left)) xscale(titlegap(2)) 							///
 		ylab(0 "0" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", angle(0) nogrid) yscale(noli) bgcolor(white) ytitle("") 	///
 		note(" ") xscale(noli)
 	graph export "$EL_out/Final/Vignettes/treat_scatter_age.png", width(2000) replace
-	
 	
 	tw  (histogram provider_age1, frac bin(18)  lw(med) fc(gs16) gap(10) yaxis(2)) || 			///
 		(lpoly percent_correctt provider_age1 if countrycode== 1, bwidth(1.2) lwidth(0.5))		///
@@ -556,18 +555,20 @@ if $sectionI {
 		(lpoly percent_correctt provider_age1 if countrycode== 12, bwidth(1.2) lwidth(0.5))		///
 		(lpoly percent_correctt provider_age1 if countrycode== 13, bwidth(1.2) lwidth(0.5))		///
 		(lpoly percent_correctt provider_age1, bwidth(1.2) lwidth(1.5) lcolor(cranberry)),		///
-		ylabel(0 "0" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", labsize(small) angle(0) nogrid) 	///
-		xlabel(20 "20" 40 "40" 60 "60" 80 "80") ytitle("Share of Age", axis(2) size(small))				///
-		xtitle("Provider Age {&rarr}", size(small) placement(left))	ytitle(" ") yscale(noli axis(2))	///
-		ytitle("Percent of Conditions Treated Correctly", size(small)) 									///
-		xsize(7) graphregion(color(white)) xscale(noli titlegap(2)) yscale(noli) 						///
-		yla(, axis(2) angle(0) nogrid labsize(vsmall))	yscale(alt) yscale(alt axis(2))					///
-		bgcolor(white) legend(order(2 "Guinea Bissau" 3 "Kenya 2012" 4 "Kenya 2018"						///
-		5 "Madagascar" 6 "Mozambique" 7 "Malawi" 8 "Niger" 9 "Nigeria" 10 "Sierra Leone"				///
-		11 "Togo" 12 "Tanzania 2014" 13 "Tanzania 2016" 14 "Uganda" 15 "All Countries") symy(2) 		///
-		symx(4) size(small) c(1) ring(1) pos(3) region(lc(none) fc(none))) 
+		ylabel(0 "0" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", labsize(small) angle(0) nogrid) 		///
+		xlabel(20 "20" 40 "40" 60 "60" 80 "80", labsize(small)) ytitle("Share of Age", axis(2) size(small))	///
+		xtitle("Provider Age {&rarr}", size(small) placement(left))	ytitle(" ") yscale(noli axis(2))		///
+		ytitle("Percent of Conditions Treated Correctly", size(small)) 										///
+		xsize(7) graphregion(color(white)) xscale(noli titlegap(2)) yscale(noli) 							///
+		yla(, axis(2) angle(0) nogrid labsize(vsmall))	yscale(alt) yscale(alt axis(2))						///
+		bgcolor(white) legend(order(2 "Guinea Bissau" 3 "Kenya 2012" 4 "Kenya 2018"							///
+		5 "Madagascar" 6 "Mozambique" 7 "Malawi" 8 "Niger" 9 "Nigeria" 10 "Sierra Leone"					///
+		11 "Togo" 12 "Tanzania 2014" 13 "Tanzania 2016" 14 "Uganda" 15 "All Countries") symy(2) 			///
+		symx(4) size(small) c(1) ring(1) pos(3) region(lc(none) fc(none))) 									///
+		note("Notes: These plots illustrates the percent of conditions treated correctly as provider age increases in each country. The histogram shows relative density "" as the number of providers in years.", size(vsmall)) 
 	graph export "$EL_out/Final/Vignettes/treat_scatter_age.png", width(2000) replace
 }
+
 
 /****************************************************************************
  			Create scatter line graph for provider knowledge  
@@ -605,18 +606,18 @@ if $sectionK {
 		(lpoly theta_mle provider_age1 if countrycode== 11, bwidth(1.2) lwidth(0.5))	///
 		(lpoly theta_mle provider_age1 if countrycode== 12, bwidth(1.2) lwidth(0.5))	///
 		(lpoly theta_mle provider_age1 if countrycode== 13, bwidth(1.2) lwidth(0.5))	///
-		(lpoly theta_mle provider_age1, bwidth(1.2) lwidth(1.5) lcolor(cranberry)),	///
-		ylabel(-3(1)3, labsize(small) angle(0) nogrid)   											///
-		xlabel(20 "20" 40 "40" 60 "60" 80 "80") 													///
-		xtitle("Provider Age {&rarr}", placement(left))	ytitle(" ") yscale(noli axis(2))			///
-		ytitle("Knowledge Score", size(small)) ytitle("Share of Age", axis(2) size(small)) 			///
-		xsize(7) graphregion(color(white)) xscale(noli titlegap(2)) yscale(noli) 					///
-		yla(, axis(2) angle(0) nogrid labsize(vsmall))	yscale(alt) yscale(alt axis(2))				///
-		bgcolor(white) legend(order(2 "Guinea Bissau" 3 "Kenya 2012" 4 "Kenya 2018"					///
-		5 "Madagascar" 6 "Mozambique" 7 "Malawi" 8 "Niger" 9 "Nigeria" 10 "Sierra Leone"			///
-		11 "Togo" 12 "Tanzania 2014" 13 "Tanzania 2016" 14 "Uganda" 15 "All Countries") symy(2) 	///
-		symx(4) size(small) c(1) ring(1) pos(3) region(lc(none) fc(none))) 							///
-		note("Notes: These plots illustrates the change in provider knowledge score as provider age increases in each country. The histogram shows relative density "" as the number of providers in each 20 year bin.", size(vsmall)) 
+		(lpoly theta_mle provider_age1, bwidth(1.2) lwidth(1.5) lcolor(cranberry)),		///
+		ylabel(-3(1)3, labsize(small) angle(0) nogrid)   												///
+		xlabel(20 "20" 40 "40" 60 "60" 80 "80", labsize(small)) 										///
+		xtitle("Provider Age {&rarr}", size(small) placement(left))	ytitle(" ") yscale(noli axis(2))	///
+		ytitle("Knowledge Score", size(small)) ytitle("Share of Age", axis(2) size(small)) 				///
+		xsize(7) graphregion(color(white)) xscale(noli titlegap(2)) yscale(noli) 						///
+		yla(, axis(2) angle(0) nogrid labsize(vsmall))	yscale(alt) yscale(alt axis(2))					///
+		bgcolor(white) legend(order(2 "Guinea Bissau" 3 "Kenya 2012" 4 "Kenya 2018"						///
+		5 "Madagascar" 6 "Mozambique" 7 "Malawi" 8 "Niger" 9 "Nigeria" 10 "Sierra Leone"				///
+		11 "Togo" 12 "Tanzania 2014" 13 "Tanzania 2016" 14 "Uganda" 15 "All Countries") symy(2) 		///
+		symx(4) size(small) c(1) ring(1) pos(3) region(lc(none) fc(none))) 								///
+		note("Notes: These plots illustrates the change in provider knowledge score as provider age increases in each country. The histogram shows relative density "" as the number of providers in years.", size(vsmall)) 
 	graph export "$EL_out/Final/Vignettes/treat_knowledge_score.png", width(2000) replace
 	
 }	

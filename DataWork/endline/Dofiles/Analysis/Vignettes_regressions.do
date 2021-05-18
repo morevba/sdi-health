@@ -159,20 +159,17 @@
 	gen 		countryfac_id = countrycode + "_" + facility_id
  
 	*Run regressions and save regression estimates 
-	areg 	theta_mle i.provider_cadre provider_age1, ab(countryfac_id) cluster(survey_id)
+	reg 	theta_mle i.provider_cadre provider_age1, vce(cluster survey_id)
 	eststo 	theta_mle1
 	estadd  local hascout	"No"
-	estadd  local hasfac 	"YES"
 	
-	areg 	theta_mle i.provider_cadre provider_age1 i.facility_level_rec, ab(countrycode) cluster(survey_id)
+	reg 	theta_mle i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, vce(cluster survey_id)
 	eststo 	theta_mle2
-	estadd  local hascout	"Yes"
-	estadd  local hasfac 	"No"
+	estadd  local hascout	"No"
 	
 	areg 	theta_mle i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, ab(countrycode) cluster(survey_id)
 	eststo 	theta_mle3
 	estadd  local hascout	"Yes"
-	estadd  local hasfac 	"No"
    
 *****************************************************************************
 /* Regression results using long data */
@@ -196,47 +193,41 @@
 	replace treat 	= 1 if treat==100
 
 	*Run regressions and save regression estimates 
-	areg 	treat i.provider_cadre provider_age1, ab(countryfac_id) cluster(survey_id)
+	reg 	treat i.provider_cadre provider_age1, vce(cluster survey_id)
 	eststo 	treat1
 	estadd  local hascout	"No"
-	estadd  local hasfac 	"YES"
 	
-	areg 	treat i.provider_cadre provider_age1 i.facility_level_rec, ab(countrycode) cluster(survey_id)
+	reg 	treat i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec,  vce(cluster survey_id)
 	eststo 	treat2
-	estadd  local hascout	"Yes"
-	estadd  local hasfac 	"No"
+	estadd  local hascout	"No"
 	
 	areg 	treat i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, ab(countrycode) cluster(survey_id)
 	eststo 	treat3
 	estadd  local hascout	"Yes"
-	estadd  local hasfac 	"No"
 	
-	areg 	diag i.provider_cadre provider_age1, ab(countryfac_id) cluster(survey_id)
+	reg 	diag i.provider_cadre provider_age1, vce(cluster survey_id)
 	eststo 	diag1
 	estadd  local hascout	"No"
-	estadd  local hasfac 	"YES"
 	
-	areg	diag i.provider_cadre provider_age1 i.facility_level_rec, ab(countrycode) cluster(survey_id)
+	reg	diag i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, vce(cluster survey_id)
 	eststo 	diag2
-	estadd  local hascout	"Yes"
-	estadd  local hasfac 	"No"
+	estadd  local hascout	"No"
 	
 	areg	diag i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, ab(countrycode) cluster(survey_id)
 	eststo 	diag3
 	estadd  local hascout	"Yes"
-	estadd  local hasfac 	"No"
 
 *****************************************************************************
 /* Output regression results */
 *****************************************************************************
 
-	esttab 	theta_mle1 theta_mle2 theta_mle3												///
-			treat1 treat2 treat3  															///
-			diag1 diag2 diag3  																///
-			using "$EL_out/Final/Regression_Results.csv", replace 							///
-			stats(hascout hasfac N r2,  fmt(0 0 0 3) 										///
-			labels("Country fixed effects" "Facility fixed effects" "Observations" "R2"))	///
-			csv label se(3) collabels(none)  nobaselevels  									///
+	esttab 	theta_mle1 theta_mle2 theta_mle3								///
+			treat1 treat2 treat3  											///
+			diag1 diag2 diag3  												///
+			using "$EL_out/Final/Vignettes/Regression_Results.csv", replace ///
+			stats(hascout N r2,  fmt(0 0 3) 								///
+			labels("Country fixed effects" "Observations" "R2"))			///
+			csv label se(3) collabels(none)  nobaselevels  					///
 			nodepvars nocons star( * 0.1 ** 0.05 *** 0.01)			
 	
 	
