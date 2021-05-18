@@ -26,7 +26,7 @@
 	*Isolate the variables in which the dataset is unique 
 	keep	facility_id country year provider_id	/// unique identifiers 
 			gps_utm	admin1_name admin2_name	num_med /// variales being added
-			num_staff med_frac
+			num_staff med_frac avg_weight weight
 			
 	order	country year facility_id 
 	sort 	country year facility_id provider_id

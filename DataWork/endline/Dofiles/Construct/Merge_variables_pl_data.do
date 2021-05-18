@@ -27,7 +27,7 @@
 			admin1_name admin2_name med_frac num_med 		/// variales being added
 			num_staff caseload skip_* *_history_* *_exam_*	///
 			diag* *_test_* diag* treat* num_skipped			///
-			public *_antibio 
+			public *_antibio avg_weight weight
 				
 	order	country year facility_id 
 	sort 	country year facility_id provider_id unique_id
@@ -35,6 +35,14 @@
 	*Apply lables to isolated variables 
 	label var	country "Name of country"
 	label var 	year 	"Year survey was conducted" 
+	
+	*Clean up counntry weights - these countries dont have weights yet 
+	replace weight = . if country == "GUINEABISSAU"
+	replace weight = . if country == "MOZAMBIQUE"
+	replace weight = . if country == "MALAWI"
+	
+	*
+	 collapse (mean) weight, by(country year)
  
 	*Check if the dataset is unique at provider level 
 	isid country year facility_id provider_id // dataset is unique at provider id level 
