@@ -12,7 +12,7 @@
        ** IDS VAR: country year unique_id 
        ** NOTES:
        ** WRITTEN BY:			Michael Orevba
-       ** Last date modified: 	April 23rd 2021
+       ** Last date modified: 	May 18th 2021
 	   
  *************************************************************************/
  
@@ -893,7 +893,6 @@ if $sectionF {
 	file close 	descTable		
 	}			
 
- 
 /******************************************************************************
 			Table of descriptive stats of providers 
 ******************************************************************************/
@@ -1016,12 +1015,12 @@ if $sectionG {
 	"Has diploma&  				{`N1r'}&	{`N2r'}&  {`N3r'}&  {`N4r'}&	{`N5r'}&	{`N6r'}&	{`N7r'}&	{`N8r'}&	{`N9r'}&	{`N10r'}&	{`N11r'}&	{`N12r'}&	{`N13r'}\\" _n ///
 	"Has certificate&  			{`O1r'}&	{`O2r'}&  {`O3r'}&  {`O4r'}&	{`O5r'}&	{`O6r'}&	{`O7r'}&	{`O8r'}&	{`O9r'}&	{`O10r'}&	{`O11r'}&	{`O12r'}&	{`O13r'}\\" _n ///
 	"\hline" _n ///
-	"\multicolumn{15}{l}{\footnotesize Certain countries have missing data for some of the vignettes}\\" _n ///
+	"\multicolumn{14}{l}{\footnotesize Notes: Providers were not asked about their medical education in Kenya 2012 and Uganda. The medical officer indicator is composed of providers that idenitified as doctors or clinical officers. The other profession indicator is}\\" _n ///
+	"\multicolumn{14}{l}{\footnotesize composed of the following: medical (nursing) assistants, patient aides, matrons, medical aides, radiographers, physiotherapists, environmental health officers, health surveillance assistants, and pharmacists.}\\" _n ///
 	"\end{tabular}"
 	file close 	descTable		
 	}			
 
 	
-
 
 ***************************************** End of do-file *********************************************

@@ -24,7 +24,7 @@
 		global sectionD		0 // Bar graph of staffing of clinics by facility type  
 		global sectionE		0 // Bar graph of clinics by region
 		global sectionF		0 // Bar graph of staff gender by facility type 
-		global sectionG		0 // Pyramid of provider gender 
+		global sectionG		1 // Pyramid of provider gender 
 		global secitonH		1 // Fraction of female doctors 
 
 /*************************************
