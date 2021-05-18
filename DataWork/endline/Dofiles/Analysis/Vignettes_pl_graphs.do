@@ -213,7 +213,7 @@
 
 	lab var overall_questions_frac 	"Average proportion of possible questions asked per vignette"
 	lab var overall_exams_frac 		"Average proportion of possible physical exams done per vignette"
- exit  	
+   	
 /****************************************************************************
  			Run regressions for IRT score 	
 *****************************************************************************/
