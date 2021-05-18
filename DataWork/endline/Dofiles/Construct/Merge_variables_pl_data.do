@@ -40,9 +40,6 @@
 	replace weight = . if country == "GUINEABISSAU"
 	replace weight = . if country == "MOZAMBIQUE"
 	replace weight = . if country == "MALAWI"
-	
-	*
-	 collapse (mean) weight, by(country year)
  
 	*Check if the dataset is unique at provider level 
 	isid country year facility_id provider_id // dataset is unique at provider id level 

@@ -48,6 +48,11 @@
 	drop 	facility_id_dup				// this variable is no longer needed 
 	sort 	country year facility_id	// sort dataset 
 	
+	*Clean up counntry weights - these countries dont have weights yet 
+	replace weight = . if country == "GUINEABISSAU"
+	replace weight = . if country == "MOZAMBIQUE"
+	replace weight = . if country == "MALAWI"
+	
 /*************************************
 		Merge variables  
 **************************************/	
