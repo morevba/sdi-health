@@ -28,7 +28,7 @@
 	use  "$EL_dtFin/Final_pl.dta", clear   
 	
 	*Drop observations that skipped all vignettes 
-	drop if num_skipped == 8 
+	drop if num_skipped == 8 | num_skipped == . 
 
 	*Drop eclampsia since only Niger did this moddule 
 	drop 	eclampsia_* skip_eclampsia
@@ -170,7 +170,7 @@
 	areg 	theta_mle i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, ab(countrycode) cluster(survey_id)
 	eststo 	theta_mle3
 	estadd  local hascout	"Yes"
-   
+    
 *****************************************************************************
 /* Regression results using long data */
 *****************************************************************************
@@ -180,7 +180,7 @@
  
 	drop treat_guidelines* treat_accuracy treat_observed /// these variables are not needed 
 		 diag_accuracy treat_guidedate 
- 
+  
 	*Rename treat and antibio variables 
 	rename treat* treat*_
 	rename diag*  diag*_

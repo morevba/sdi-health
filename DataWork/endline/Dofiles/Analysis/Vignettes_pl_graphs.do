@@ -823,7 +823,7 @@ if $sectionP {
 				legend(label(1 "Advanced") label(2 "Diploma") label(3 "Certificate") label(4 "None") 				///
 				order(1 2 3 4) pos(1) ring(0) cols(1) region(lwidth(0.2) fc(none)) symx(4) symy(2) size(vsmall)) 	///
 				yscale(range(0 3) titlegap(2)) bgcolor(white) yscale(noli) xscale(noli)								///
-				barcolor(navy*1.3 navy*0.9 navy*0.6 navy*0.3)  														///
+				barcolor(navy*0.3 navy*0.6 navy*0.9 navy*1.3)  														///
 				ylabel(41 "Togo" 29 "Tanzania 2014" 149 "Guinea Bissau" 137 "Kenya 2012" 							///
 						17 "Tanzania 2016" 125 "Kenya 2018" 5 "Uganda" 113 "Madagascar" 							///
 						101 "Mozambique" 89 "Malawi" 77 "Niger" 65 "Nigeria" 53 "Sierra Leone"						///
