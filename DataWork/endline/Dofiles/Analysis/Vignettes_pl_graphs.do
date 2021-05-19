@@ -43,7 +43,7 @@
 	use  "$EL_dtFin/Final_pl.dta", clear   
 	
 	*Drop observations that skipped all vignettes 
-	drop if num_skipped == 8 
+	drop if num_skipped == 8 | num_skipped ==. 
 
 	*Drop eclampsia since only Niger did this moddule 
 	drop 	eclampsia_* skip_eclampsia
@@ -672,7 +672,7 @@ if $sectionM {
 			title("Cadre", color(black) size(small)) note("")
 	graph export "$EL_out/Final/Vignettes/occu_outcomes.png", replace as(png)
 }
- 
+ exit 
 /****************************************************************************
  			Create box plot for provider cadre & knowledge score 	
 *****************************************************************************/	
@@ -688,18 +688,54 @@ if $sectionN {
 		noout box(1, fcolor(none) lcolor(navy*0.6)) 														///
 		box(2, fcolor(none) lcolor(navy*0.9)) 																///
 		box(3, fcolor(none) lcolor(navy*1.3)) 																///
-		title(, size(medium) justification(left) color(black) span pos(11)) 								///
 		graphregion(color(white)) ytitle(, placement(left) justification(left)) ylabel(, angle(0) nogrid) 	///
 		legend(label(1 "Doctor") label(2 "Nurse") label(3 "Para-Professional") 								///
 		order(1 2 3) pos(1) ring(0) cols(1) region(lwidth(0.2) fc(none)) symx(4) symy(2) size(vsmall)) 		///
 		yscale(range(-3 3) titlegap(2)) bgcolor(white) asyvars showyvars horizontal 						///
 		ylabel(-3 "-3" -1 "-1" 0 "0" 1 "1" 3 "3" , labsize(small)) 											///
 		yline(`ken_med', lwidth(0.3) lcolor(green) lpattern(dash)) 											///
-		ytitle("Provider knowledge score {&rarr}", size(small)) allcategories								///
-		note("Notes: These plots depict the provider knowledge score distribution by provider profession in each country. The "" green dashed-line represents the median score of nurses in the Kenya 2012 sample.", size(vsmall)) 
+		ytitle("Provider knowledge score {&rarr}", size(small)) allcategories								
 	graph export "$EL_out/Final/Vignettes/cadre_knowledge.png", replace as(png)	
+	
+	
+	*Create local od knowledge score based on Kenya Nurses 2012 
+	summarize  	theta_mle if cy == "KEN_2012" & provider_cadre1 == 3, d
+	local 		ken_med  = `r(p50)' 
+	
+	*Create local to store country sample sizes 
+	forvalues x = 1/13 {
+		count if theta_mle!=. & countrycode == `x' & theta_mle>= `ken_med'
+		local N`x' = r(N) 
+	}
+	
+	*Create locals for country names 
+	local crt_name 1 "Guinea Bissau (n=`N1')" 2 "Kenya 2012 (n=`N2')" 3 "Kenya 2018 (n=`N3')" 4 "Madagascar (n=`N4')" 5 "Mozambique (n=`N5')" 6 "Malawi (n=`N6')" 7 "Niger (n=`N7')" 8 "Nigeria (n=`N8')" 9 "Sierra Leone (n=`N9')" 10 "Togo (n=`N10')" 11 "Tanzania 2014 (n=`N11')" 12 "Tanzania 2016 (n=`N12')" 13 "Uganda (n=`N13')"
+	
+	betterbarci theta_mle if theta_mle>= `ken_med', 															///
+			over(provider_cadre1) by(countrycode) pct	scale(0.7) 												///
+			graphregion(color(white)) ytitle(, placement(left) justification(left)) 							///
+			xlabel(0 "0" 1 "1" 2 "2" 3 "3" , labsize(small))													/// 
+			legend(label(1 "Doctor") label(2 "Nurse") label(3 "Para-Professional") 								///
+			order(1 2 3) pos(1) ring(0) cols(1) region(lwidth(0.2) fc(none)) symx(4) symy(2) size(vsmall)) 		///
+			yscale(range(0 3) titlegap(2)) bgcolor(white) yscale(noli) xscale(noli)								///
+			ylabel(38 "Togo" 35 "Tanzania 2014" 32 "Guinea Bissau" 29 "Kenya 2012" 								///
+					26 "Tanzania 2016" 23 "Kenya 2018" 20 "Uganda" 17 "Madagascar" 								///
+					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"							///
+					, labsize(med) angle(0) nogrid) xtitle("Provider knowledge score {&rarr}", size(small)) 								
 }		
- 		
+  
+  
+  
+  
+		betterbarci overall_exams_frac	if skip_`disease' == 0								///
+					,over(countrycode) pct scale(0.7) xoverhang								///
+					ysize(6) xlab(0 "0%" 25 "25%" 50 "50%" 75 "75%" 100 "100%")				///
+					ylabel(38 "Togo" 35 "Tanzania 2014" 32 "Guinea Bissau" 29 "Kenya 2012" 	///
+					26 "Tanzania 2016" 23 "Kenya 2018" 20 "Uganda" 17 "Madagascar" 			///
+					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
+					,angle(0) labsize(med)) graphregion(color(white)) 						///
+					format(%9.1f) legend(off) title("`disease'", color(black) size(med))
+
 /****************************************************************************
  			Create box plot for knowledge score 	
 *****************************************************************************/			
@@ -724,8 +760,7 @@ if $sectionO {
 		ylabel(-5(1)5, labsize(small) angle(0) nogrid) 													///
 		ytitle("Provider's knowledge score {&rarr}", placement(left) justification(left) size(small)) 	///
 		legend(off) yscale(range(-5 5) titlegap(2)) bgcolor(white) graphregion(color(white)) asyvars 	///
-		showyvars horizontal																			///
-		note("Notes: These plots depict the provider knowledge score distribution of each country. The distribution within each country "" inlcudes outliers.", size(vsmall)) 
+		showyvars horizontal																			
 	graph export "$EL_out/Final/Vignettes/prov_knowledge.png", replace as(png)	
 }
 
@@ -756,8 +791,7 @@ if $sectionP {
 		yscale(range(-3 3) titlegap(2)) bgcolor(white) asyvars showyvars horizontal 						///
 		ylabel(-3 "-3" -1 "-1" 0 "0" 1 "1" 3 "3" , labsize(small)) legend(off) 								///
 		yline(`ken_med', lwidth(0.3) lcolor(green) lpattern(dash)) 											///
-		ytitle("Provider knowledge score {&rarr}", size(small)) 											///
-		note("Notes: These plots show the provider knowledge score distribution by medical education in each country. The "" green dashed-line represents the median score of nurses in the Kenya 2012 sample. Unfortunately, "" medical education information was not collected in Kenya 2012 and Uganda surveys", size(vsmall)) 
+		ytitle("Provider knowledge score {&rarr}", size(small)) note("")											
 	graph export "$EL_out/Final/Vignettes/prov_mededu.png", replace as(png)	
 }
 
@@ -893,8 +927,7 @@ if $sectionQ {
 			xline(`ken_med', lwidth(0.3) lcolor(green) lpattern(dash)) 								///
 			xlabel(-3(1)3, labsize(small) angle(0) nogrid) xscale(noli)  							///
 			legend(size(small) cols(1) ring(1) pos(2)) 												///
-			bgcolor(white) graphregion(color(white)) ysize(4) 										///
-			note("Notes: These plots depict the provider knowledge score distribution of each country by provider profession. The "" green dashed-line represents the median score of nurses in the Kenya 2012 sample.", size(vsmall)) 
+			bgcolor(white) graphregion(color(white)) ysize(4) 										
 		graph export "$EL_out/Final/Vignettes/scatter_cadre_knowledge.png", replace as(png)		
 	}
 	
