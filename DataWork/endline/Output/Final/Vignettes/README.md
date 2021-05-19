@@ -19,3 +19,7 @@
 ![](treat_scatter_knowledge.png)
 
 ![](prov_des.png)
+
+![](scatter_cadre_knowledge.png)
+
+![](prov_mededu_bar.png)
