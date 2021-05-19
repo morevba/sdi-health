@@ -20,6 +20,6 @@
 
 ![](prov_des.png)
 
-![](scatter_cadre_knowledge.png)
+![](scatter_cadre_knowledge_bar.png)
 
 ![](prov_mededu_bar.png)
