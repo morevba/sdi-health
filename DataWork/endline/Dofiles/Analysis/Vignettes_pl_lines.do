@@ -578,10 +578,10 @@ if $sectionJ {
 			title("Percent of Conditions Treated Correctly", size(medium) justification(left) color(black) span pos(11)) 		///
 			xtitle("Provider's knowledge score {&rarr}", placement(left) justification(left)) xscale(titlegap(2))	 			///
 			ylab(0 "0" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", angle(0) nogrid) yscale(noli) bgcolor(white) ytitle("") 	///
-			xlabel(-5 (1) 5) xscale(noli)																					   
+			xlabel(-5 (1) 5) xscale(noli) note("")																				   
 	graph export "$EL_out/Final/Vignettes/treat_scatter_knowledge.png", width(2000) replace	
 }
-	
+ 	
 /****************************************************************************
  			Create line graph for provider knowledge & age  
 *****************************************************************************/
