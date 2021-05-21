@@ -685,20 +685,20 @@ if $sectionN {
 
 	graph box theta_mle, 																					///
 		over(provider_cadre1, reverse axis(noli) label(nolabel)) 											///
-		over(countrycode, relabel(`crt_name2') axis(noli) label(labsize(small))) 							///
+		over(countrycode, sort(1)  relabel(`crt_name2') axis(noli) label(labsize(small))) 					///
 		noout box(1, fcolor(none) lcolor(navy*0.6)) 														///
 		box(2, fcolor(none) lcolor(navy*0.9)) 																///
 		box(3, fcolor(none) lcolor(navy*1.3)) 																///
 		graphregion(color(white)) ytitle(, placement(left) justification(left)) ylabel(, angle(0) nogrid) 	///
 		legend(label(1 "Doctor") label(2 "Nurse") label(3 "Para-Professional") 								///
-		order(1 2 3) pos(1) ring(0) cols(1) region(lwidth(0.2) fc(none)) symx(4) symy(2) size(vsmall)) 		///
+		order(1 2 3) pos(11) ring(0) cols(1) region(lwidth(0.2) fc(none)) symx(4) symy(2) size(vsmall)) 	///
 		yscale(range(-3 3) titlegap(2)) bgcolor(white) asyvars showyvars horizontal 						///
 		ylabel(-3 "-3" -1 "-1" 0 "0" 1 "1" 3 "3" , labsize(small)) 											///
 		yline(`ken_med', lwidth(0.3) lcolor(green) lpattern(dash)) 											///
 		ytitle("Provider knowledge score {&rarr}", size(small)) allcategories	note("")							
 	graph export "$EL_out/Final/Vignettes/cadre_knowledge.png", replace as(png)	
 
-	
+	 
 	*Create local od knowledge score based on Kenya Nurses 2012 
 	summarize  	theta_mle if cy == "KEN_2012" & provider_cadre1 == 3, d
 	local 		ken_med  = `r(p50)' 
@@ -783,7 +783,7 @@ if $sectionP {
 
 	graph box theta_mle, ///
 		over(provider_mededuc1, reverse axis(noli) label(labsize(tiny))) 									///
-		over(countrycode2,  axis(noli) label(labsize(small))) 												///
+		over(countrycode2, sort(1) descending axis(noli) label(labsize(small))) 							///
 		noout box(1, fcolor(none) lcolor(navy*0.3)) box(2, fcolor(none) lcolor(navy*0.6))					///
 		box(3, fcolor(none) lcolor(navy*0.9)) box(4, fcolor(none) lcolor(navy*1.3)) 						///
 		title(, size(medium) justification(left) color(black) span pos(11)) 								///
