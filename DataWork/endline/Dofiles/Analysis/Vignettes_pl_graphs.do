@@ -672,7 +672,7 @@ if $sectionM {
 			title("Cadre", color(black) size(small)) note("")
 	graph export "$EL_out/Final/Vignettes/occu_outcomes.png", replace as(png)
 }
-  
+ 
 /****************************************************************************
  			Create box plot for provider cadre & knowledge score 	
 *****************************************************************************/	
@@ -763,7 +763,7 @@ if $sectionO {
 		showyvars horizontal																			
 	graph export "$EL_out/Final/Vignettes/prov_knowledge.png", replace as(png)	
 }
- 
+
 /****************************************************************************
  			Create box plot for medical education  	
 *****************************************************************************/	
@@ -783,7 +783,7 @@ if $sectionP {
 
 	graph box theta_mle, ///
 		over(provider_mededuc1, reverse axis(noli) label(labsize(tiny))) 									///
-		over(countrycode2, sort(1) descending axis(noli) label(labsize(small))) 							///
+		over(countrycode2, sort(1) axis(noli) label(labsize(small))) 										///
 		noout box(1, fcolor(none) lcolor(navy*0.3)) box(2, fcolor(none) lcolor(navy*0.6))					///
 		box(3, fcolor(none) lcolor(navy*0.9)) box(4, fcolor(none) lcolor(navy*1.3)) 						///
 		title(, size(medium) justification(left) color(black) span pos(11)) 								///
@@ -793,7 +793,7 @@ if $sectionP {
 		yline(`ken_med', lwidth(0.3) lcolor(green) lpattern(dash)) 											///
 		ytitle("Provider knowledge score {&rarr}", size(small)) note("")											
 	graph export "$EL_out/Final/Vignettes/prov_mededu.png", replace as(png)	
-	
+ 	
 	*Create local od knowledge score based on Kenya Nurses 2012 
 	summarize  	theta_mle if cy == "KEN_2012" & provider_cadre1 == 3, d
 	local 		ken_med  = `r(p50)' 

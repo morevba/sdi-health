@@ -12,7 +12,7 @@
        ** IDS VAR: country year unique_id 
        ** NOTES:
        ** WRITTEN BY:			Michael Orevba
-       ** Last date modified: 	May 17th 2021
+       ** Last date modified: 	May 21th 2021
 	   
  *************************************************************************/
  
@@ -225,6 +225,15 @@
 			treat1 treat2 treat3  											///
 			diag1 diag2 diag3  												///
 			using "$EL_out/Final/Vignettes/Regression_Results.csv", replace ///
+			stats(hascout N r2,  fmt(0 0 3) 								///
+			labels("Country fixed effects" "Observations" "R2"))			///
+			csv label se(3) collabels(none)  nobaselevels  					///
+			nodepvars nocons star( * 0.1 ** 0.05 *** 0.01)	
+			
+	esttab 	theta_mle1 theta_mle2 theta_mle3								///
+			treat1 treat2 treat3  											///
+			diag1 diag2 diag3  												///
+			using "$EL_out/Final/Vignettes/Regression_Results.tex", replace ///
 			stats(hascout N r2,  fmt(0 0 3) 								///
 			labels("Country fixed effects" "Observations" "R2"))			///
 			csv label se(3) collabels(none)  nobaselevels  					///
