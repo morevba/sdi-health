@@ -17,17 +17,10 @@
  *************************************************************************/
  
 		//Sections
-		global sectionA 	0 // line graph - conditions treated correctly 		
-		global sectionB 	0 // line graph - conditions diagnosed correctly
-		global sectionC 	0 // line graph - outcomes variables 
-		global sectionD 	0 // line graph - input rank variables 
-		global sectionE 	0 // line graph - possible history questions asked 
-		global sectionF 	0 // line graph - possible physical exams done 
-		global sectionG 	0 // line graph - input variables 
-		global sectionH 	1 // line graph - conditions treated correctly second
-		global sectionI 	1 // line graph - scatter for provider age 
-		global sectionJ 	1 // line graph - scatter for provider knowledge
-		global sectionK		1 // line graph - provider knowledge & age 
+		global sectionA 	1 // line graph - conditions treated correctly 
+		global sectionB 	1 // line graph - scatter for provider age 
+		global sectionC 	1 // line graph - scatter for provider knowledge
+		global sectionD		1 // line graph - provider knowledge & age 
 		
 /*****************************
 			Vignettes   
@@ -286,197 +279,11 @@
 	
 	local outcome_axis_3 " 0 `" "Vignette IRT Score" " " "Correct Diagnoses" " " "Correct Treatment" " " "Inapprop. Antibiotics" "' 14 `" "-3" " " "`diag1'%" " " "`treat1'%" " " "`ab1'%" "' 28 `" "-2" " " "`diag2'%" " " "`treat2'%" " " "`ab2'%" "' 42 `" "-1" " " "`diag3'%" " " "`treat3'%" " " "`ab3'%" "' 56 `" "0" " " "`diag4'%" " " "`treat4'%" " " "`ab4'%" "' 70 `" "1" " " "`diag5'%" " " "`treat5'%" " " "`ab5'%" "' 84 `" "2" " " "`diag6'%" " " "`treat6'%" " " "`ab6'%" "' 100 `" "3" " " "`diag7'%" " " "`treat7'%" " " "`ab7'%" "' "	
 
-/****************************************************************************
- 			Create line graph for conditions treated correctly 	
-*****************************************************************************/			
-if $sectionA {	
-	
-	*Graph of line plot of fraction of conditions treated correctly 
-	tw  (lowess percent_correctt pctile_bycountry if countrycode== 1, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 2, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 3, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 4, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 5, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 6, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 7, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 8, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 9, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 10, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 11, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 12, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctt pctile_bycountry if countrycode== 13, bwidth(1.2) lwidth(0.5)),	///
-		title("Fraction of Conditions Treated Correctly", color(black) size(small))					///
-		ytitle("") xtitle("") xlab(`treat_axis',angle(0) nogrid labsize(vsmall))					///
-		ylabel(0 "0%" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", angle(0) nogrid labsize(vsmall))	///
-		note("", size(tiny)) legend(order(1 "Guinea Bissau" 2 "Kenya 2012" 3 "Kenya 2018"			///
-		4 "Madagascar" 5 "Mozambique" 6 "Malawi" 7 "Niger" 8 "Nigeria" 9 "Sierra Leone"				///
-		10 "Togo" 11 "Tanzania 2014" 12 "Tanzania 2016" 13 "Uganda") col(4) size(small) 			///
-		symy(2) symx(6)) bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))
-	graph export "$EL_out/Final/Vignettes/treat_percentile_lowess.png", replace as(png)	
-}		
- 			
-/****************************************************************************
- 			Create line graph for conditions diagnosed correctly 	
-*****************************************************************************/		
-if $sectionB {		
-	
-	*Graph line plot of fraction of conditions diagnosed correctly  
-	tw  (lowess percent_correctd pctile_bycountry if countrycode== 1, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 2, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 3, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 4, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 5, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 6, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 7, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 8, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 9, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 10, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 11, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 12, bwidth(1.2) lwidth(0.5))		///
-		(lowess percent_correctd pctile_bycountry if countrycode== 13, bwidth(1.2) lwidth(0.5)),	///
-		title("Fraction of Conditions Diagnosed Correctly", color(black) size(small))				///
-		ytitle("") xtitle("") xlab(`diag_axis',angle(0) nogrid labsize(vsmall))						///
-		ylabel(0 "0%" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", angle(0) nogrid labsize(vsmall))	///
-		note("", size(tiny)) legend(order(1 "Guinea Bissau" 2 "Kenya 2012" 3 "Kenya 2018"			///
-		4 "Madagascar" 5 "Mozambique" 6 "Malawi" 7 "Niger" 8 "Nigeria" 9 "Sierra Leone"				///
-		10 "Togo" 11 "Tanzania 2014" 12 "Tanzania 2016" 13 "Uganda") size(small) symy(2) 			///
-		symx(6) col(4))	bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))				
-	graph export "$EL_out/Final/Vignettes/diag_percentile_lowess.png", replace as(png)	
-}
-		
-/****************************************************************************
- 			Create line graph for outcomes variables 	
-*****************************************************************************/		
-if $sectionC {		
-	
-	*Increase scale of number of tests
-	gen total_tests2 = total_tests * 55 
-	
-	*Create line graph of outcome variables 
-	tw  (histogram theta_mle_17 if theta_mle_17>-5, freq yaxis(2) color(gs13)) ||										///
-		(lowess percent_correctd pctile_overall, bwidth(1.2) lwidth(0.5) yaxis(1))										///
-		(lowess percent_correctt pctile_overall, bwidth(1.2) lwidth(0.5) yaxis(1))										///
-		(lowess percent_antibiotict pctile_overall, bwidth(1.2) lwidth(0.5) yaxis(1))									///
-		(lowess total_tests2 		pctile_overall, bwidth(1.2) lwidth(0.5) yaxis(2)),									///
-		ytitle("") ytitle("Tests", axis(2))  xtitle("") xlab(`outcome_axis_2', axis(1) angle(0) nogrid labsize(vsmall))	///
-		ylabel(0 "0%" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", axis(1) angle(0) nogrid labsize(vsmall))			///
-		ylabel(0 "0" 300 "5" 600 "10" 900 "15" 1200 "20" 1500 "25", axis(2) angle(0) nogrid labsize(vsmall))			///
-		yscale(alt) yscale(alt axis(2)) bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))			///
-		legend(order(3 "Conditions Diagnosed Correctly" 4 "Conditions Treated Correctly" 								///
-		5 "Conditions Given Antibiotics" 2 "Number of tests") size(small) symy(2) symx(6) c(1) pos(11) ring(0)) 		///
-		note("", size(tiny))
-	graph export "$EL_out/Final/Vignettes/outcomes_percentile_lowess.png", replace as(png)	
-}
 
-/****************************************************************************
- 			Create line graph for input rank variables  	
-*****************************************************************************/	
-if $sectionD {	
-		
-	*Create line graph for input rank variables 	
-	tw  (lowess pctile_overall pctile_bycountry if countrycode== 1, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 2, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 3, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 4, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 5, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 6, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 7, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 8, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 9, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 10, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 11, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 12, bwidth(1.2) lwidth(0.5))	///
-		(lowess pctile_overall pctile_bycountry if countrycode== 13, bwidth(1.2) lwidth(0.5)), 	///
-		ytitle("") xtitle("") xlab(`input_axis_2',angle(0) nogrid labsize(vsmall))				///
-		ylabel(0 "0th" 25 "25th" 50 "50th" 75 "75th" 100 "100th", angle(0) nogrid labsize(vsmall))		///
-		yline(50, lp(dash) lcolor(black)) legend(order(1 "Guinea Bissau" 2 "Kenya 2012" 3 "Kenya 2018"	///
-		4 "Madagascar" 5 "Mozambique" 6 "Malawi" 7 "Niger" 8 "Nigeria" 9 "Sierra Leone"			///
-		10 "Togo" 11 "Tanzania 2014" 12 "Tanzania 2016" 13 "Uganda") size(small) symy(2) 		///
-		symx(6) col(4))	bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))	///
-		title("Provider Within-Country Percentile Rank", color(black) size(small))				///
-		subtitle("More Knowledgeable Providers ->", color(black) size(vsmall) position(11))
-	graph export "$EL_out/Final/Vignettes/rank_percentile_lowess.png", replace as(png)
-}
-			
-/****************************************************************************
- 			Create line graph for possible history questions asked  	
-*****************************************************************************/	
-if $sectionE {	
-		
-	*Create line graph for possible history questions asked 
-	tw  (lowess overall_questions_frac pctile_bycountry if countrycode== 1, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 2, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 3, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 4, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 5, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 6, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 7, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 8, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 9, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 10, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 11, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 12, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_questions_frac pctile_bycountry if countrycode== 13, bwidth(1.2) lwidth(0.5)), 	///
-		title("Fraction of Possible History Questions Asked", color(black) size(small)) 				///
-		ytitle("") xtitle("") xlab(`questions_axis',angle(0) nogrid labsize(vsmall))					///
-		ylabel(0 "0%" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", angle(0) nogrid labsize(vsmall))	///
-		note("", size(tiny)) legend(order(1 "Guinea Bissau" 2 "Kenya 2012" 3 "Kenya 2018"				///
-		4 "Madagascar" 5 "Mozambique" 6 "Malawi" 7 "Niger" 8 "Nigeria" 9 "Sierra Leone"					///
-		10 "Togo" 11 "Tanzania 2014" 12 "Tanzania 2016" 13 "Uganda") size(small) symy(2) 				///
-		symx(6) col(4))	bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))
-	graph export "$EL_out/Final/Vignettes/questions_percentile_lowess.png", replace as(png)	
-}
-	
-/****************************************************************************
- 			Create line graph for possible physical exams done   	
-*****************************************************************************/
-if $sectionF {		
-	
-	*Create line graph of possible physical exams done 
-	tw  (lowess overall_exams_frac pctile_bycountry if countrycode== 1, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 2, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 3, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 4, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 5, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 6, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 7, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 8, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 9, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 10, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 11, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 12, bwidth(1.2) lwidth(0.5))	///
-		(lowess overall_exams_frac pctile_bycountry if countrycode== 13, bwidth(1.2) lwidth(0.5)), 	///
-		title("Fraction of Possible Physical Exams Done", color(black) size(small)) 				///
-		ytitle("") xtitle("") xlab(`exams_axis',angle(0) nogrid labsize(vsmall))					///
-		ylabel(0 "0%" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", angle(0) nogrid labsize(vsmall))	///
-		note("", size(tiny)) legend(order(1 "Guinea Bissau" 2 "Kenya 2012" 3 "Kenya 2018"				///
-		4 "Madagascar" 5 "Mozambique" 6 "Malawi" 7 "Niger" 8 "Nigeria" 9 "Sierra Leone"					///
-		10 "Togo" 11 "Tanzania 2014" 12 "Tanzania 2016" 13 "Uganda") size(small) symy(2) 				///
-		symx(6) col(4))	bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))
-	graph export "$EL_out/Final/Vignettes/exams_percentile_lowess.png", replace as(png)	
-}
-	
-/****************************************************************************
- 			Create line graph for input variables   	
-*****************************************************************************/
-if $sectionG {			
-	
-	*Create line graph & histogram for input variables 
-	tw  (histogram theta_mle_17 if theta_mle_17>-5, freq yaxis(2) color(gs13)) ||									///
-		(lowess overall_questions_frac pctile_overall, bwidth(1.2) lwidth(0.5) yaxis(1))							///
-		(lowess overall_exams_frac pctile_overall, bwidth(1.2) lwidth(0.5) yaxis(1)),								///
-		ytitle("") xtitle("") xlab(`input_axis_2', axis(1) angle(0) nogrid labsize(vsmall))							///
-		ylabel(0 "0%" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", axis(1) angle(0) nogrid labsize(vsmall))		///
-		yscale(axis(2) off) yscale(alt) yscale(alt axis(2)) legend(region(lwidth(none)))							///
-		legend(order(2 "Possible History Questions Asked" 3 "Possible Physical Exams Done") size(small) symy(2) 	///
-		symx(6) c(1) pos(11) ring(0)) bgcolor(white) graphregion(color(white)) note("", size(tiny))
-	graph export "$EL_out/Final/Vignettes/inputs_percentile_lowess.png", replace as(png)	
-}
- 
 /****************************************************************************
  			Create line graph for conditions treated correctly second
 *****************************************************************************/
-if $sectionH {	
+if $sectionA {	
  
 *Graph of line plot of fraction of conditions treated correctly 
 	tw  (lowess percent_correctt pctile_bycountry if countrycode== 1, bwidth(1.2) lwidth(0.5))	///
@@ -507,7 +314,7 @@ if $sectionH {
 /****************************************************************************
  			Create scatter line graph for provider age 
 *****************************************************************************/
-if $sectionI {	
+if $sectionB {	
 	
 	replace provider_age1 = . if provider_age1>80 | provider_age1<=19
 
@@ -547,11 +354,10 @@ if $sectionI {
 	graph export "$EL_out/Final/Vignettes/treat_scatter_age.png", width(2000) replace
 }
 
-
 /****************************************************************************
  			Create scatter line graph for provider knowledge  
 *****************************************************************************/
-if $sectionJ {	
+if $sectionC {	
 	
 	lpoly percent_correctt theta_mle, ///
 			degree(1) jitter(10) m(x) mc(black%10) lineopts(lw(thick)) graphregion(color(white)) 								///
@@ -565,7 +371,7 @@ if $sectionJ {
 /****************************************************************************
  			Create line graph for provider knowledge & age  
 *****************************************************************************/
-if $sectionK {	
+if $sectionD {	
 		
 	replace provider_age1 = . if provider_age1>80 | provider_age1<=19
 	

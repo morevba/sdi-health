@@ -12,28 +12,15 @@
        ** IDS VAR: country year unique_id 
        ** NOTES:
        ** WRITTEN BY:			Michael Orevba
-       ** Last date modified: 	May 17th 2021
+       ** Last date modified: 	May 24th 2021
 	   
  *************************************************************************/
  
 		//Sections
-		global sectionA		0 // bar graph 		- history questions answerd
-		global sectionB		0 // bar graph 		- physical exams conducted 	
-		global sectionC		0 // bar graph 		- correctly diagnosed condition	
-	    global sectionD		0 // bar graph 		- correctly treated condition
-		global sectionE 	0 // bar graph 		- number of tests conducted
-		global sectionF 	0 // box plot  		- summary of outcome variables 
-		global sectionG 	0 // box plot  		- summary of input variables 
-		global sectionH 	0 // box plot  		- rural/urban
-		global sectionI 	0 // box plot  		- private/public
-		global sectionJ 	0 // box plot  		- facility type 
-		global sectionK 	0 // box plot  		- gender
-		global sectionL 	0 // box plot  		- education 
-		global sectionM 	0 // box plot 	 	- provider cadre 
-		global sectionN 	1 // box plot  		- provider cadre & knowledge score 
-		global sectionO 	1 // box plot  		- provider knowledge score 
-		global sectionP 	1 // box plot  		- medical qualification 
-		global sectionQ 	1 // scatter plot  	- provider cadre & knowledge score
+		global sectionA 	1 // box plot  		- provider cadre & knowledge score 
+		global sectionB 	1 // box plot  		- provider knowledge score 
+		global sectionC 	1 // box plot  		- medical qualification 
+		global sectionD 	1 // scatter plot  	- provider cadre & knowledge score
 	
 /*****************************
 			Vignettes   
@@ -293,370 +280,11 @@
 	local crt_name2 1 "Guinea Bissau" 2 "Kenya 2012" 3 "Kenya 2018" 4 "Madagascar" 5 "Mozambique" 6 "Malawi" 7 "Niger" 8 "Nigeria" 9 "Sierra Leone" 10 "Togo" 11 "Tanzania 2014" 12 "Tanzania 2016" 13 "Uganda"
 	
  	
-/****************************************************************************
-			Create bar graph on history questions answerd 			
-*****************************************************************************/	
-if $sectionA {	
 
-	*Store disease names in a local 
-	local diseases diarrhea pneumonia diabetes tb pph asphyxia pregnant
-
-	foreach disease in `diseases' {
-	
-		betterbarci overall_questions_frac	if skip_`disease' == 0							///
-					,over(countrycode) pct scale(0.7) xoverhang								///
-					ysize(6) xlab(0 "0%" 25 "25%" 50 "50%" 75 "75%" 100 "100%")				///
-					ylabel(38 "Togo" 35 "Tanzania 2014" 32 "Guinea Bissau" 29 "Kenya 2012" 	///
-					26 "Tanzania 2016" 23 "Kenya 2018" 20 "Uganda" 17 "Madagascar" 			///
-					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
-					,angle(0) labsize(med)) graphregion(color(white)) 						///
-					format(%9.1f) legend(off) title("`disease'", color(black) size(med))
-		graph save "$EL_out/Final/Vignettes/ques_frac_`disease'.gph", replace 
-	}	
-		
-		betterbarci overall_questions_frac	if skip_malaria == 0							///
-					,over(countrycode) pct scale(0.7) xoverhang								///
-					ysize(6) xlab(0 "0%" 25 "25%" 50 "50%" 75 "75%" 100 "100%")				///
-					ylabel(38 "Kenya 2018" 35 "Togo" 32 "Tanzania 2014" 29 "Guinea Bissau" 	///
-					26 "Kenya 2012" 23 "Tanzania 2016" 20 "Uganda" 17 "Madagascar" 			///
-					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
-					,angle(0) labsize(med)) graphregion(color(white)) 						///
-					format(%9.1f) legend(off) title("malaria", color(black) size(med))
-		graph save "$EL_out/Final/Vignettes/ques_frac_malaria.gph", replace 		
-		
-	*Combine all graphs 
-	graph combine 												///
-			"$EL_out/Final/Vignettes/ques_frac_diabetes.gph"	///
-			"$EL_out/Final/Vignettes/ques_frac_diarrhea.gph"	///
-			"$EL_out/Final/Vignettes/ques_frac_malaria.gph"		///
-			"$EL_out/Final/Vignettes/ques_frac_pneumonia.gph"	///
-			"$EL_out/Final/Vignettes/ques_frac_pph.gph"			///
-			"$EL_out/Final/Vignettes/ques_frac_tb.gph"			///
-			,altshrink graphregion(color(white)) 				///
-			title("Fraction of Possible History Questions Asked", color(black) size(small))
-	graph export "$EL_out/Final/Vignettes/ques_frac_all.png", replace as(png)
-}
-
-/****************************************************************************
- 			Create bar graph on physical exams conducted 		
-*****************************************************************************/	
-if $sectionB {
-
-	*Store disease names in a local 
-	local diseases diarrhea pneumonia diabetes tb pph asphyxia pregnant
-
-	foreach disease in `diseases' {
-	
-		betterbarci overall_exams_frac	if skip_`disease' == 0								///
-					,over(countrycode) pct scale(0.7) xoverhang								///
-					ysize(6) xlab(0 "0%" 25 "25%" 50 "50%" 75 "75%" 100 "100%")				///
-					ylabel(38 "Togo" 35 "Tanzania 2014" 32 "Guinea Bissau" 29 "Kenya 2012" 	///
-					26 "Tanzania 2016" 23 "Kenya 2018" 20 "Uganda" 17 "Madagascar" 			///
-					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
-					,angle(0) labsize(med)) graphregion(color(white)) 						///
-					format(%9.1f) legend(off) title("`disease'", color(black) size(med))
-		graph save "$EL_out/Final/Vignettes/exams_frac_`disease'.gph", replace 
-	}
-		
-		betterbarci overall_exams_frac	if skip_malaria == 0								///
-					,over(countrycode) pct scale(0.7) xoverhang								///
-					ysize(6) xlab(0 "0%" 25 "25%" 50 "50%" 75 "75%" 100 "100%")				///
-					ylabel(38 "Kenya 2018" 35 "Togo" 32 "Tanzania 2014" 29 "Guinea Bissau" 	///
-					26 "Kenya 2012" 23 "Tanzania 2016" 20 "Uganda" 17 "Madagascar" 			///
-					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
-					,angle(0) labsize(med)) graphregion(color(white)) 						///
-					format(%9.1f) legend(off) title("malaria", color(black) size(med))
-		graph save "$EL_out/Final/Vignettes/exams_frac_malaria.gph", replace 	
-	
-	*Combine all graphs 
-	graph combine 												///
-			"$EL_out/Final/Vignettes/exams_frac_asphyxia.gph"	///
-			"$EL_out/Final/Vignettes/exams_frac_diabetes.gph"	///
-			"$EL_out/Final/Vignettes/exams_frac_diarrhea.gph"	///
-			"$EL_out/Final/Vignettes/exams_frac_malaria.gph"	///
-			"$EL_out/Final/Vignettes/exams_frac_pneumonia.gph"	///
-			"$EL_out/Final/Vignettes/exams_frac_pph.gph"		///
-			"$EL_out/Final/Vignettes/exams_frac_tb.gph"			///
-			,altshrink graphregion(color(white)) 				///
-			title("Fraction of Possible Physical Exams Done", color(black) size(small))
-	graph export "$EL_out/Final/Vignettes/exams_frac_all.png", replace as(png)
-}
-
-/****************************************************************************
- 			Create bar graph for correctly diagnosed condition			
-*****************************************************************************/		
-if $sectionC {	
-	
-	*Store disease names in a local 
-	local diseases diarrhea pneumonia diabetes tb pph asphyxia pregnant
-
-	foreach disease in `diseases' {
-	
-		betterbarci percent_correctd	if skip_`disease' == 0								///
-					,over(countrycode) pct scale(0.7) xoverhang								///
-					ysize(6) xlab(0 "0%" 25 "25%" 50 "50%" 75 "75%" 100 "100%")				///
-					ylabel(38 "Togo" 35 "Tanzania 2014" 32 "Guinea Bissau" 29 "Kenya 2012" 	///
-					26 "Tanzania 2016" 23 "Kenya 2018" 20 "Uganda" 17 "Madagascar" 			///
-					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
-					,angle(0) labsize(med)) graphregion(color(white)) 						///
-					format(%9.1f) legend(off) title("`disease'", color(black) size(med))
-		graph save "$EL_out/Final/Vignettes/diag_frac_`disease'.gph", replace 
-	}
-		
-		betterbarci percent_correctd	if skip_malaria == 0								///
-					,over(countrycode) pct scale(0.7) xoverhang								///
-					ysize(6) xlab(0 "0%" 25 "25%" 50 "50%" 75 "75%" 100 "100%")				///
-					ylabel(38 "Kenya 2018" 35 "Togo" 32 "Tanzania 2014" 29 "Guinea Bissau" 	///
-					26 "Kenya 2012" 23 "Tanzania 2016" 20 "Uganda" 17 "Madagascar" 			///
-					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
-					,angle(0) labsize(med)) graphregion(color(white)) 						///
-					format(%9.1f) legend(off) title("malaria", color(black) size(med))
-		graph save "$EL_out/Final/Vignettes/diag_frac_malaria.gph", replace 		
-	
-	*Combine all graphs 
-	graph combine 												///
-			"$EL_out/Final/Vignettes/diag_frac_asphyxia.gph"	///
-			"$EL_out/Final/Vignettes/diag_frac_diabetes.gph"	///
-			"$EL_out/Final/Vignettes/diag_frac_diarrhea.gph"	///
-			"$EL_out/Final/Vignettes/diag_frac_malaria.gph"		///
-			"$EL_out/Final/Vignettes/diag_frac_pneumonia.gph"	///
-			"$EL_out/Final/Vignettes/diag_frac_pph.gph"			///
-			"$EL_out/Final/Vignettes/diag_frac_tb.gph"			///
-			,altshrink graphregion(color(white)) 				///
-			title("Fraction Who Corectly Diagnosed Condition", color(black) size(small))
-	graph export "$EL_out/Final/Vignettes/diag_frac_all.png", replace as(png)
-}
-	
-/****************************************************************************
- 			Create bar graph for correctly treated condition			
-*****************************************************************************/		
-if $sectionD {	
-	
-	*Store disease names in a local 
-	local diseases diarrhea pneumonia diabetes tb pph asphyxia pregnant
-
-	foreach disease in `diseases' {
-	
-		betterbarci percent_correctt	if skip_`disease' == 0								///
-					,over(countrycode) pct scale(0.7) xoverhang								///
-					ysize(6) xlab(0 "0%" 25 "25%" 50 "50%" 75 "75%" 100 "100%")				///
-					ylabel(38 "Togo" 35 "Tanzania 2014" 32 "Guinea Bissau" 29 "Kenya 2012" 	///
-					26 "Tanzania 2016" 23 "Kenya 2018" 20 "Uganda" 17 "Madagascar" 			///
-					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
-					,angle(0) labsize(med)) graphregion(color(white)) 						///
-					format(%9.1f) legend(off) title("`disease'", color(black))
-		graph save "$EL_out/Final/Vignettes/treat_frac_`disease'.gph", replace 
-	}
-	
-		betterbarci percent_correctt	if skip_malaria == 0								///
-					,over(countrycode) pct scale(0.7) xoverhang								///
-					ysize(6) xlab(0 "0%" 25 "25%" 50 "50%" 75 "75%" 100 "100%")				///
-					ylabel(38 "Kenya 2018" 35 "Togo" 32 "Tanzania 2014" 29 "Guinea Bissau" 	///
-					26 "Kenya 2012" 23 "Tanzania 2016" 20 "Uganda" 17 "Madagascar" 			///
-					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
-					,angle(0) labsize(med)) graphregion(color(white)) 						///
-					format(%9.1f) legend(off) title("malaria", color(black))
-		graph save "$EL_out/Final/Vignettes/treat_frac_malaria.gph", replace 	
-	
-	*Combine all graphs 
-	graph combine 												///
-			"$EL_out/Final/Vignettes/treat_frac_asphyxia.gph"	///
-			"$EL_out/Final/Vignettes/treat_frac_diabetes.gph"	///
-			"$EL_out/Final/Vignettes/treat_frac_diarrhea.gph"	///
-			"$EL_out/Final/Vignettes/treat_frac_malaria.gph"	///
-			"$EL_out/Final/Vignettes/treat_frac_pneumonia.gph"	///
-			"$EL_out/Final/Vignettes/treat_frac_pph.gph"		///
-			"$EL_out/Final/Vignettes/treat_frac_tb.gph"			///
-			,altshrink graphregion(color(white)) 				///
-			title("Fraction Who Corectly Treated Condition", color(black) size(small))
-	graph export "$EL_out/Final/Vignettes/treat_frac_all.png", replace as(png)
-}
-	
-/****************************************************************************
- 			Create bar graph for number of tests conducted		
-*****************************************************************************/		
-if $sectionE {	
-		
-	*Store disease names in a local 
-	local diseases diarrhea pneumonia diabetes tb pph asphyxia pregnant
-
-	foreach disease in `diseases' {
-	
-		betterbarci total_tests	if skip_`disease' == 0										///
-					,over(countrycode) pct scale(0.7) xoverhang								///
-					ysize(6) xlab(0 "0" 5 "5" 10 "10" 15 "15" 20 "20")						///
-					ylabel(38 "Togo" 35 "Tanzania 2014" 32 "Guinea Bissau" 29 "Kenya 2012" 	///
-					26 "Tanzania 2016" 23 "Kenya 2018" 20 "Uganda" 17 "Madagascar" 			///
-					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
-					,angle(0) labsize(med)) graphregion(color(white)) 						///
-					format(%9.1f) legend(off) title("`disease'", color(black) size(med))
-		graph save "$EL_out/Final/Vignettes/tests_done_`disease'.gph", replace 
-	}
-	
-		betterbarci total_tests	if skip_malaria == 0										///
-					,over(countrycode) pct scale(0.7) xoverhang								///
-					ysize(6) xlab(0 "0" 5 "5" 10 "10" 15 "15" 20 "20")						///
-					ylabel(38 "Kenya 2018" 35 "Togo" 32 "Tanzania 2014" 29 "Guinea Bissau" 	///
-					26 "Kenya 2012" 23 "Tanzania 2016" 20 "Uganda" 17 "Madagascar" 			///
-					14 "Mozambique" 11 "Malawi"	8 "Niger" 5 "Nigeria" 2 "Sierra Leone"		///
-					,angle(0) labsize(med)) graphregion(color(white)) 						///
-					format(%9.1f) legend(off) title("malaria", color(black) size(med))
-		graph save "$EL_out/Final/Vignettes/tests_done_malaria.gph", replace 	
-
-	*Combine all graphs 
-	graph combine 												///
-			"$EL_out/Final/Vignettes/tests_done_asphyxia.gph"	///
-			"$EL_out/Final/Vignettes/tests_done_diabetes.gph"	///
-			"$EL_out/Final/Vignettes/tests_done_diarrhea.gph"	///
-			"$EL_out/Final/Vignettes/tests_done_malaria.gph"	///
-			"$EL_out/Final/Vignettes/tests_done_pneumonia.gph"	///
-			"$EL_out/Final/Vignettes/tests_done_pph.gph"		///
-			"$EL_out/Final/Vignettes/tests_done_tb.gph"			///
-			,altshrink graphregion(color(white)) 				///
-			title("Number of Tests Done", color(black) size(small))
-	graph export "$EL_out/Final/Vignettes/tests_done_all.png", replace as(png)
-}
-	
-/****************************************************************************
- 			Create box plot for summary of outcome variables 		
-*****************************************************************************/		
-if $sectionF {	
-		
-	*Graph box plot for summary outcome variables 
-	graph	hbox theta_mle, 												///
-			over(countrycode, sort(1) descending axis(noli) relabel(`crt_name') label(labsize(vsmall))) ///
-			yline(0, lwidth(0.3) lcolor(black) lpattern(dash)) 				///
-			ylab(`outcome_axis',angle(0) nogrid labsize(vsmall)) showyvars 	///
-			ytit("") bgcolor(white) graphregion(color(white))				///	
-			legend(region(lwidth(none))) intensity(.5) 						///
-			asy legend(off) title("Summary of Outcomes", color(black) size(small))
-	graph export "$EL_out/Final/Vignettes/sum_outcomes.png", replace as(png)
-}	
-
-/****************************************************************************
- 			Create box plot for summary of input variables 		
-*****************************************************************************/		
-if $sectionG {	
-		
-	*Graph box plot for summary input variables 
-	graph	hbox theta_mle, 												///
-			over(countrycode, sort(1) descending axis(noli) relabel(`crt_name') label(labsize(vsmall))) ///
-			yline(0, lwidth(0.3) lcolor(black) lpattern(dash)) 				///
-			ylab(`input_axis',angle(0) nogrid labsize(vsmall)) showyvars 	///
-			ytit("") bgcolor(white) graphregion(color(white))				///	
-			legend(region(lwidth(none))) intensity(.5) 						///
-			asy legend(off) title("Summary of Inputs", color(black) size(small))
-	graph export "$EL_out/Final/Vignettes/sum_inputs.png", replace as(png)	
-}
-
-/****************************************************************************
- 			Create box plot for rural/urban  		
-*****************************************************************************/	
-if $sectionH {	
-		
-	*Graph box plot for rural/urban  
-	graph   box theta_mle, 																				///
-            hor over(rural) over(countrycode, relabel(`crt_name2') label(labsize(vsmall))) nooutsides 	///
-            asy ylab(`outcome_axis',angle(0) nogrid labsize(vsmall)) ytit("")  							///
-            box(1 , fi(0) lc(maroon) lw(med)) box(2, fc(white) lc(navy) lw(med))						///
-			medtype(marker) medmarker(ms(X) msize(small))												///
-			bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))						///	
-			legend(order(1 "Urban" 2 "Rural" ) lwidth(0.4) symxsize(small)  c(1) pos(11) ring(0)) 		///
-			title("Rural/Urban", color(black) size(small)) note("")
-	graph export "$EL_out/Final/Vignettes/rural_urban_outcomes.png", replace as(png)
-}	
-	
-/****************************************************************************
- 			Create box plot for private/public  		
-*****************************************************************************/	
-if $sectionI {	
-		
-	*Graph box plot for private/public  
-	graph   box theta_mle, 																				///
-            hor over(public) over(countrycode, relabel(`crt_name2') label(labsize(vsmall))) nooutsides 	///
-            asy ylab(`outcome_axis',angle(0) nogrid labsize(vsmall)) ytit("")  							///
-            box(1 , fi(0) lc(maroon) lw(med)) box(2, fc(white) lc(navy) lw(med))						///
-			medtype(marker) medmarker(ms(X) msize(small))												///
-			bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))						///	
-			legend(order(1 "Private" 2 "Public" ) lwidth(0.4) symxsize(small)  c(1) pos(11) ring(0)) 	///
-			title("Private/Public", color(black) size(small)) note("")
-	graph export "$EL_out/Final/Vignettes/private_public_outcomes.png", replace as(png)	
-}
-
-/****************************************************************************
- 			Create box plot for facility type 		
-*****************************************************************************/		
-if $sectionJ {	
-		
-	*Graph box plot for facility type 
-	graph   box theta_mle, 																									///
-            hor over(facility_level) over(countrycode, relabel(`crt_name2') label(labsize(vsmall))) nooutsides 				///
-            asy ylab(`outcome_axis',angle(0) nogrid labsize(vsmall)) ytit("")  												///
-            box(1 , fi(0) lc(maroon) lw(med)) box(2, fc(white) lc(navy) lw(med)) box(3, fc(white) lc(green) lw(med))		///
-			medtype(marker) medmarker(ms(X) msize(small)) bgcolor(white) 													///
-			graphregion(color(white)) legend(region(lwidth(none))) title("Facility Type", color(black) size(small))			///	
-			legend(order(1 "Hospital" 2 "Health Center" 3 "Healt Post") lwidth(0.4) symxsize(small) c(1) pos(11) ring(0))	///
-			note("")
-	graph export "$EL_out/Final/Vignettes/facility_type_outcomes.png", replace as(png)
-} 
-	
-/****************************************************************************
- 			Create box plot for gender  		
-*****************************************************************************/		
-if $sectionK {
-		
-	*Graph box plot for gender 
-	graph   box theta_mle, 																								///
-            hor over(provider_male1) over(countrycode, relabel(`crt_name2') label(labsize(vsmall))) nooutsides 			///
-            asy ylab(`outcome_axis',angle(0) nogrid labsize(vsmall)) ytit("")  											///
-            box(1 , fi(0) lc(maroon) lw(med)) box(2, fc(white) lc(navy) lw(med)) 										///
-			medtype(marker) medmarker(ms(X) msize(small))																///
-			bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))										///	
-			legend(order(1 "Female" 2 "Male") lwidth(0.4) symxsize(small)  c(1) pos(11) ring(0)) 						///
-			title("Gender", color(black) size(small)) note("")
-	graph export "$EL_out/Final/Vignettes/gender_outcomes.png", replace as(png)	
-}
-
-/****************************************************************************
- 			Create box plot for education 		
-*****************************************************************************/		
-if $sectionL {	
-	
-	*Graph box plot for education  
-	graph   box theta_mle, 																								///
-            hor over(provider_mededuc1) over(countrycode, relabel(`crt_name2') label(labsize(vsmall))) nooutsides 		///
-            asy ylab(`outcome_axis',angle(0) nogrid labsize(vsmall)) ytit("")  											///
-            box(1 , fi(0) lc(maroon) lw(med)) box(2, fc(white) lc(navy) lw(med)) 										///
-			box(3, fc(white) lc(green) lw(med)) box(4, fc(white) lc(yellow) lw(med))									///
-			medtype(marker) medmarker(ms(X) msize(small))																///
-			bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))										///	
-			legend(order(1 "None" 2 "Certificate" 3 "Diploma" 4 "Masters+") lwidth(0.4) symxsize(small) c(1) pos(11) ring(0)) ///
-			title("Education", color(black) size(small)) note("")
-	graph export "$EL_out/Final/Vignettes/educ_outcomes.png", replace as(png)
-}	
-	
-/****************************************************************************
- 			Create box plot for provider cadre 	
-*****************************************************************************/	
-if $sectionM {	
-		
-	*Graph box plot for provider cadre 
-	graph   box theta_mle, 																								///
-            hor over(provider_cadre1) over(countrycode, relabel(`crt_name2') label(labsize(vsmall))) nooutsides 		///
-            asy ylab(`outcome_axis',angle(0) nogrid labsize(vsmall)) ytit("")  											///
-            box(1 , fi(0) lc(maroon) lw(med)) box(2, fc(white) lc(navy) lw(med)) 										///
-			box(3, fc(white) lc(green) lw(med)) 																		///
-			medtype(marker) medmarker(ms(X) msize(small))																///
-			bgcolor(white) graphregion(color(white)) legend(region(lwidth(none)))										///	
-			legend(order(1 "Doctor" 2 "Nurse" 3 "Para-Professional") lwidth(0.4) symxsize(small) c(1) pos(11) ring(0)) 	///
-			title("Cadre", color(black) size(small)) note("")
-	graph export "$EL_out/Final/Vignettes/occu_outcomes.png", replace as(png)
-}
- 
 /****************************************************************************
  			Create box plot for provider cadre & knowledge score 	
 *****************************************************************************/	
-if $sectionN {	
+if $sectionA {	
 	
 	
 	*Create local od knowledge score based on Kenya Nurses 2012 
@@ -719,7 +347,7 @@ if $sectionN {
 /****************************************************************************
  			Create box plot for knowledge score 	
 *****************************************************************************/			
-if $sectionO {	
+if $sectionB {	
 	 	
 	graph box theta_mle, ///
 		over(countrycode, sort(1) descending axis(noli) relabel(`crt_name2') label(labsize(small)))		///
@@ -747,7 +375,7 @@ if $sectionO {
 /****************************************************************************
  			Create box plot for medical education  	
 *****************************************************************************/	
-if $sectionP {	
+if $sectionC {	
 	
 	*Create a new countrycode 
 	gen 		countrycode2 = countrycode
@@ -815,7 +443,7 @@ if $sectionP {
 /****************************************************************************
  			Create scatter plot for provider cadre & knowledge score 	
 *****************************************************************************/	
-if $sectionQ {	 
+if $sectionD {	 
  
 	tostring countrycode, replace force 
 	
