@@ -219,7 +219,7 @@
 			stats(hascout N r2,  fmt(0 0 3) 											///
 			labels("Country fixed effects" "Observations" "R2"))			    		///
 			mgroups("Knowledge Score" "Treats Condition Correctly" "Diagnosis Condition Correctly", pattern(1 0 0 1 0 0 1 0 0)) ///
-			se(3) coll(none) nobaselevels  nomtitles nogaps 	///
+			se(3) coll(none) nobaselevels  nomtitles nogaps  noeqlines 	///
 			style(tex) nodepvars nocons star( * 0.1 ** 0.05 *** 0.01) nonotes compress	
 	
 	
