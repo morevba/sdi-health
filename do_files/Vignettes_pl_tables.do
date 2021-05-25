@@ -24,7 +24,7 @@
 ******************************/	
 	
 	*Open vignettes dataset 
-	use "$EL_dtFin/Vignettes_pl.dta", clear   
+	use "$VG_dtFin/Vignettes_pl.dta", clear   
 	
 /**********************************************************
 				Facility & Provider Characteristics 

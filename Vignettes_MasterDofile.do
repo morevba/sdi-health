@@ -117,7 +117,7 @@
    * standardization, different sets of control variables,
    * adofile paths etc.
 
-   do "$dataWorkFolder/global_setup.do" 
+ *  do "$dataWorkFolder/global_setup.do" 
 
 
 *iefolder*2*End_StandardGlobals*************************************************
