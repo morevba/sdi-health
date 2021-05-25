@@ -16,9 +16,6 @@
 	   
  *************************************************************************/
  
-		//Sections
-		global sectionA		0 // Reg table 	
-	  
 	
 /*****************************
 			Vignettes   
@@ -42,7 +39,7 @@
 	*Recode key variables 
 	gen 		public_rec = 0 if public == 1
 	replace 	public_rec = 1 if public == 0 
-	lab define  public_lab 1 "Private" 0 "Public"
+	lab define  public_lab 1 "Private facility" 0 "Public"
 	label val 	public_rec public_lab
 	
 	gen 		rural_rec = 0 if rural == 1
@@ -207,7 +204,7 @@
 			using "$VG_out/tables/Regression_Results.csv", replace ///
 			stats(hascout N r2,  fmt(0 0 3) 								///
 			labels("Country fixed effects" "Observations" "R2"))			///
-			mgroups("Knowledge Score" "Treats Condition Correctly" "Diagnosis Condition Correctly", pattern(1 0 0 1 0 0 1 0 0)) ///
+			mgroups("Knowledge Score" "Treats Condition Correctly" "Diagnose Condition Correctly", pattern(1 0 0 1 0 0 1 0 0)) ///
 			csv label se(3) collabels(none)  nobaselevels  mtitles("" "" "" "" "" "" "" "" "")	///
 			nodepvars nocons star( * 0.1 ** 0.05 *** 0.01)	
 
@@ -218,7 +215,7 @@
 			label  replace 																///			
 			stats(hascout N r2,  fmt(0 0 3) 											///
 			labels("Country fixed effects" "Observations" "R2"))			    		///
-			mgroups("Knowledge Score" "Treats Condition Correctly" "Diagnosis Condition Correctly", pattern(1 0 0 1 0 0 1 0 0)) ///
+			mgroups("Knowledge Score" "Treats Condition Correctly" "Diagnose Condition Correctly", pattern(1 0 0 1 0 0 1 0 0)) ///
 			se(3) coll(none) nobaselevels  nomtitles nogaps  noeqlines 	///
 			style(tex) nodepvars nocons star( * 0.1 ** 0.05 *** 0.01) nonotes compress	
 	
