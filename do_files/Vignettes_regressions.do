@@ -25,7 +25,7 @@
 ******************************/	
 	
 	*Open vignettes dataset 
-	"$EL_dtFin/Vignettes_pl.dta", clear   
+	use "$EL_dtFin/Vignettes_pl.dta", clear   
 	
 	*Encode country 
 	encode cy, gen(countrycode)
@@ -204,7 +204,7 @@
 	esttab 	theta_mle1 theta_mle2 theta_mle3								///
 			treat1 treat2 treat3  											///
 			diag1 diag2 diag3  												///
-			using "$EL_out/Final/Vignettes/Regression_Results.csv", replace ///
+			using "$VG_out/tables/Regression_Results.csv", replace ///
 			stats(hascout N r2,  fmt(0 0 3) 								///
 			labels("Country fixed effects" "Observations" "R2"))			///
 			mgroups("Knowledge Score" "Treats Condition Correctly" "Diagnosis Condition Correctly", pattern(1 0 0 1 0 0 1 0 0)) ///
@@ -214,7 +214,7 @@
 	esttab 	theta_mle1 theta_mle2 theta_mle3											///
 			treat1 treat2 treat3  														///
 			diag1 diag2 diag3  														 	///
-			using "$EL_out/Final/Vignettes/Regression_Results.tex",						///
+			using "$VG_out/tables/Regression_Results.tex",						///
 			label  replace 																///			
 			stats(hascout N r2,  fmt(0 0 3) 											///
 			labels("Country fixed effects" "Observations" "R2"))			    		///

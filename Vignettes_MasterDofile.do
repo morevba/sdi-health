@@ -20,7 +20,7 @@
 
        ** WRITTEN BY:   		Michael Orevba 
 
-       ** Last date modified:  	Feb 3rd 2021
+       ** Last date modified:  	May 24th 2021
        */
 
 *iefolder*0*StandardSettings****************************************************
@@ -74,7 +74,7 @@
 
    * Root folder globals
    * ---------------------
-    global projectfolder "/Users/`dir'/Dropbox/SDI project" 
+    global projectfolder "/Users/`dir'/Dropbox/SDI_vignettes" 
  
 
 * These lines are used to test that the name is not already used (do not edit manually)
@@ -82,52 +82,28 @@
    * Project folder globals
    * ---------------------
 
-   global dataWorkFolder         "$projectfolder/DataWork"
-
 *iefolder*1*FolderGlobals*master************************************************
 *iefolder will not work properly if the line above is edited
 
-   global mastData               "$dataWorkFolder/MasterData" 
 
 *iefolder*1*FolderGlobals*encrypted*********************************************
 *iefolder will not work properly if the line above is edited
 
-   global encryptFolder          "$dataWorkFolder/EncryptedData" 
 
 *iefolder*1*FolderGlobals*endline***********************************************
 *iefolder will not work properly if the line above is edited
 
 
-   *Encrypted round sub-folder globals
-   global EL                     "$dataWorkFolder/endline" 
-
-   *Encrypted round sub-folder globals
-   global EL_encrypt             "$encryptFolder/Round endline Encrypted" 
-   global EL_dtRaw               "$EL_encrypt/Raw Identified Data" 
-   global EL_doImp               "$EL_encrypt/Dofiles Import" 
-   global EL_HFC                 "$EL_encrypt/High Frequency Checks" 
-
    *DataSets sub-folder globals
-   global EL_dt                  "$EL/DataSets" 
-   global EL_dtDeID              "$EL_dt/Deidentified" 
-   global EL_dtInt               "$EL_dt/Intermediate" 
-   global EL_dtFin               "$EL_dt/Final" 
-
+   global VG_dt                  "$projectfolder/DataSets" 
+   global VG_dtFin               "$VG_dt/Final"    
+   
    *Dofile sub-folder globals
-   global EL_do                  "$EL/Dofiles" 
-   global EL_doCln               "$EL_do/Cleaning" 
-   global EL_doCon               "$EL_do/Construct" 
-   global EL_doAnl               "$EL_do/Analysis" 
+   global VG_do                  "/Users/`dir'/Documents/GitHub/sdi-health/do_files" // this is the GitHub repo path
 
    *Output sub-folder globals
-  *global EL_out                 "$EL/Output" 	// this is the dropbox path
-   global EL_out                 "/Users/`dir'/Documents/GitHub/sdi-health/Datawork/endline/Output" 	// this is the GitHub repo path
-   global EL_outRaw              "$EL_out/Raw" 
-   global EL_outFin              "$EL_out/Final" 
+   global VG_out                 "/Users/`dir'/Documents/GitHub/sdi-health/outputs" 	// this is the GitHub repo path
 
-   *Questionnaire sub-folder globals
-   global EL_prld                "$EL_quest/PreloadData" 
-   global EL_doc                 "$EL_quest/Questionnaire Documentation" 
 
 *iefolder*1*End_FolderGlobals***************************************************
 *iefolder will not work properly if the line above is edited
@@ -167,25 +143,14 @@
 
    **Set the locals corresponding to the tasks you want
    * run to 1. To not run a task, set the local to 0.
-   local importDo       0
-   local cleaningDo     1
-   local constructDo    1
-   local analysisDo     0
+   local analysisDo     1
 
-   if (`importDo' == 1) { // Change the local above to run or not to run this file
-       do "$EL_doImp/EL_import_MasterDofile.do" 
-   }
-
-   if (`cleaningDo' == 1) { // Change the local above to run or not to run this file
-       do "$EL_do/EL_cleaning_MasterDofile.do" 
-   }
-
-   if (`constructDo' == 1) { // Change the local above to run or not to run this file
-       do "$EL_do/EL_construct_MasterDofile.do" 
-   }
-
+  
    if (`analysisDo' == 1) { // Change the local above to run or not to run this file
-       do "$EL_do/EL_analysis_MasterDofile.do" 
+		do "$VG_do/Vignettes_pl_graphs.do" 
+		do "$VG_do/Vignettes_pl_lines.do" 
+		do "$VG_do/Vignettes_pl_tables.do" 
+		do "$VG_do/Vignettes_regressions.do" 
    }
 
 *iefolder*3*End_RunDofiles******************************************************

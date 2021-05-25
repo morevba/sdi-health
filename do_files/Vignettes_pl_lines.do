@@ -12,7 +12,7 @@
        ** IDS VAR: country year unique_id 
        ** NOTES:
        ** WRITTEN BY:			Michael Orevba
-       ** Last date modified: 	May 17th 2021
+       ** Last date modified: 	May 24th 2021
 	   
  *************************************************************************/
  
@@ -27,7 +27,7 @@
 ******************************/	
 	
 	*Open vignettes dataset 
-	"$EL_dtFin/Vignettes_pl.dta", clear    
+	use "$EL_dtFin/Vignettes_pl.dta", clear    
 		
 /*************************************************************************
 			Correct diagnosis 
@@ -308,7 +308,7 @@ if $sectionA {
 		10 "Togo" 11 "Tanzania 2014" 12 "Tanzania 2016" 13 "Uganda") symy(2) symx(4) size(small) 	///
 		c(1) ring(1) pos(3) region(lc(none) fc(none))) 												///
 		title("Percent of Conditions Treated Correctly", size(medium) justification(left) color(black) span pos(11)) 
-	graph export "$EL_out/Final/Vignettes/treat_percentile_lowess_2.png", replace as(png)	
+	graph export "$VG_out/figs/treat_percentile_lowess_2.png", replace as(png)	
 }		 
 
 /****************************************************************************
@@ -324,7 +324,7 @@ if $sectionB {
 		xtitle("Provider's age  {&rarr}", placement(left) justification(left)) xscale(titlegap(2)) 							///
 		ylab(0 "0" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", angle(0) nogrid) yscale(noli) bgcolor(white) ytitle("") 	///
 		note(" ") xscale(noli)
-	graph export "$EL_out/Final/Vignettes/treat_scatter_age.png", width(2000) replace
+	graph export "$VG_out/figs/treat_scatter_age.png", width(2000) replace
 	
 	tw  (histogram provider_age1, freq bin(12)  lw(med) fc(gs16) lc(gs13) gap(10) yaxis(2)) || 	///
 		(lpoly percent_correctt provider_age1 if countrycode== 1, bwidth(1.2) lwidth(0.5))		///
@@ -351,7 +351,7 @@ if $sectionB {
 		5 "Madagascar" 6 "Mozambique" 7 "Malawi" 8 "Niger" 9 "Nigeria" 10 "Sierra Leone"								///
 		11 "Togo" 12 "Tanzania 2014" 13 "Tanzania 2016" 14 "Uganda" 15 "All Countries") symy(2) 						///
 		symx(4) size(small) c(1) ring(1) pos(3) region(lc(none) fc(none))) 									
-	graph export "$EL_out/Final/Vignettes/treat_scatter_age.png", width(2000) replace
+	graph export "$VG_out/figs/treat_scatter_age.png", width(2000) replace
 }
 
 /****************************************************************************
@@ -365,7 +365,7 @@ if $sectionC {
 			xtitle("Provider's knowledge score {&rarr}", placement(left) justification(left)) xscale(titlegap(2))	 			///
 			ylab(0 "0" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", angle(0) nogrid) yscale(noli) bgcolor(white) ytitle("") 	///
 			xlabel(-5 (1) 5) xscale(noli) note("")																				   
-	graph export "$EL_out/Final/Vignettes/treat_scatter_knowledge.png", width(2000) replace	
+	graph export "$VG_out/figs/treat_scatter_knowledge.png", width(2000) replace	
 }
  	
 /****************************************************************************
@@ -400,7 +400,7 @@ if $sectionD {
 		5 "Madagascar" 6 "Mozambique" 7 "Malawi" 8 "Niger" 9 "Nigeria" 10 "Sierra Leone"				///
 		11 "Togo" 12 "Tanzania 2014" 13 "Tanzania 2016" 14 "Uganda" 15 "All Countries") symy(2) 		///
 		symx(4) size(small) c(1) ring(1) pos(3) region(lc(none) fc(none))) 								
-	graph export "$EL_out/Final/Vignettes/treat_knowledge_score.png", width(2000) replace
+	graph export "$VG_out/figs/treat_knowledge_score.png", width(2000) replace
 	
 }	
 	

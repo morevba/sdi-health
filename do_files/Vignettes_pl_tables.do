@@ -12,7 +12,7 @@
        ** IDS VAR: country year unique_id 
        ** NOTES:
        ** WRITTEN BY:			Michael Orevba
-       ** Last date modified: 	May 18th 2021
+       ** Last date modified: 	May 24th 2021
 	   
  *************************************************************************/
  
@@ -24,7 +24,7 @@
 ******************************/	
 	
 	*Open vignettes dataset 
-	"$EL_dtFin/Vignettes_pl.dta", clear   
+	use "$EL_dtFin/Vignettes_pl.dta", clear   
 	
 /**********************************************************
 				Facility & Provider Characteristics 
@@ -248,7 +248,7 @@ if $sectionA {
 	}
 	
 	*Create and build out latex table 
-	file open 	descTable using "$EL_out/Final/Tex files/prov_summ_1.tex", write replace
+	file open 	descTable using "$VG_out/tables/prov_summ_1.tex", write replace
 	file write 	descTable ///
 	"\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}" _n ///
 	"\begin{tabular}{l*{7}{c}}" _n ///
@@ -276,7 +276,7 @@ if $sectionA {
 	file close 	descTable		
 	
 	*Create and build out latex table 
-	file open 	descTable using "$EL_out/Final/Tex files/prov_summ_2.tex", write replace
+	file open 	descTable using "$VG_out/tables/prov_summ_2.tex", write replace
 	file write 	descTable ///
 	"\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}" _n ///
 	"\begin{tabular}{l*{8}{c}}" _n ///

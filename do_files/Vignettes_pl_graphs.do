@@ -27,7 +27,7 @@
 ******************************/	
 	
 	*Open vignettes dataset 
-	"$EL_dtFin/Vignettes_pl.dta", clear   
+	use "$VG_dtFin/Vignettes_pl.dta", clear   
 		
 /*************************************************************************
 			Correct diagnosis 
@@ -304,7 +304,7 @@ if $sectionA {
 		ylabel(-3 "-3" -1 "-1" 0 "0" 1 "1" 3 "3" , labsize(small)) 											///
 		yline(`ken_med', lwidth(0.3) lcolor(green) lpattern(dash)) 											///
 		ytitle("Provider knowledge score {&rarr}", size(small)) allcategories	note("")							
-	graph export "$EL_out/Final/Vignettes/cadre_knowledge.png", replace as(png)	
+	graph export "$VG_out/figs/cadre_knowledge.png", replace as(png)	
 
 	 
 	*Create local od knowledge score based on Kenya Nurses 2012 
@@ -340,7 +340,7 @@ if $sectionA {
 						17 "Tanzania 2016" 125 "Kenya 2018" 5 "Uganda" 113 "Madagascar" 							///
 						101 "Mozambique" 89 "Malawi" 77 "Niger" 65 "Nigeria" 53 "Sierra Leone"						///
 						, labsize(med) angle(0) nogrid) xtitle("Share of Providers {&rarr}", size(small))
-		graph export "$EL_out/Final/Vignettes/cadre_knowledge_bar.png", replace as(png)	
+		graph export "$VG_out/figs/cadre_knowledge_bar.png", replace as(png)	
 	restore 	
 }		
   
@@ -369,7 +369,7 @@ if $sectionB {
 		ytitle("Provider's knowledge score {&rarr}", placement(left) justification(left) size(small)) 	///
 		legend(off) yscale(range(-5 5) titlegap(2)) bgcolor(white) graphregion(color(white)) asyvars 	///
 		showyvars horizontal																			
-	graph export "$EL_out/Final/Vignettes/prov_knowledge.png", replace as(png)	
+	graph export "$VG_out/figs/prov_knowledge.png", replace as(png)	
 }
 
 /****************************************************************************
@@ -400,7 +400,7 @@ if $sectionC {
 		ylabel(-3 "-3" -1 "-1" 0 "0" 1 "1" 3 "3" , labsize(small)) legend(off) 								///
 		yline(`ken_med', lwidth(0.3) lcolor(green) lpattern(dash)) 											///
 		ytitle("Provider knowledge score {&rarr}", size(small)) note("")											
-	graph export "$EL_out/Final/Vignettes/prov_mededu.png", replace as(png)	
+	graph export "$VG_out/figs/prov_mededu.png", replace as(png)	
  	
 	*Create local od knowledge score based on Kenya Nurses 2012 
 	summarize  	theta_mle if cy == "KEN_2012" & provider_cadre1 == 3, d
@@ -436,7 +436,7 @@ if $sectionC {
 						17 "Tanzania 2016" 125 "Kenya 2018" 5 "Uganda" 113 "Madagascar" 							///
 						101 "Mozambique" 89 "Malawi" 77 "Niger" 65 "Nigeria" 53 "Sierra Leone"						///
 						, labsize(med) angle(0) nogrid) xtitle("Share of Providers {&rarr}", size(small))
-		graph export "$EL_out/Final/Vignettes/prov_mededu_bar.png", replace as(png)	 	
+		graph export "$VG_out/figs/prov_mededu_bar.png", replace as(png)	 	
 	restore 	
 }
  
@@ -573,7 +573,7 @@ if $sectionD {
 			xlabel(-3(1)3, labsize(small) angle(0) nogrid) xscale(noli)  							///
 			legend(size(small) cols(1) ring(1) pos(2)) 												///
 			bgcolor(white) graphregion(color(white)) ysize(4) 										
-		graph export "$EL_out/Final/Vignettes/scatter_cadre_knowledge.png", replace as(png)		
+		graph export "$VG_out/figs/scatter_cadre_knowledge.png", replace as(png)		
 	}
 	
 	 
