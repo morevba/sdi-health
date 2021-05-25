@@ -1,6 +1,0 @@
-\beamer@sectionintoc {1}{First Section}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Overall Caseload Stats}{3}{0}{1}
-\beamer@sectionintoc {2}{Second Section}{6}{0}{2}
-\beamer@subsectionintoc {2}{1}{Breakdown of Caseload by Density}{6}{0}{2}
-\beamer@sectionintoc {3}{Third Section}{9}{0}{3}
-\beamer@subsectionintoc {3}{1}{Breakdown of Caseload by Percentiles}{9}{0}{3}
