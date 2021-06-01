@@ -12,15 +12,16 @@
        ** IDS VAR: country year unique_id 
        ** NOTES:
        ** WRITTEN BY:			Michael Orevba
-       ** Last date modified: 	May 24th 2021
+       ** Last date modified: 	June 1st 2021
 	   
  *************************************************************************/
  
 		//Sections
-		global sectionA 	1 // line graph - conditions treated correctly 
-		global sectionB 	1 // line graph - scatter for provider age 
-		global sectionC 	1 // line graph - scatter for provider knowledge
-		global sectionD		1 // line graph - provider knowledge & age 
+		global sectionA 	0 // line graph - conditions treated correctly 
+		global sectionB 	0 // line graph - scatter for provider age 
+		global sectionC 	0 // line graph - scatter for treatment accuracy
+		global sectionD		0 // line graph - provider knowledge & age 
+		global sectionE		0 // line graph - scatter for diagnostic accuracy
 		
 /*****************************
 			Vignettes   
@@ -326,7 +327,7 @@ if $sectionB {
 		note(" ") xscale(noli)
 	graph export "$VG_out/figs/treat_scatter_age.png", width(2000) replace
 	
-	tw  (histogram provider_age1, freq bin(12)  lw(med) fc(gs16) lc(gs13) gap(10) yaxis(2)) || 	///
+	tw  (histogram provider_age1, freq bin(12)  lw(med) fc(gs15) lc(gs13) gap(10) yaxis(2)) || 	///
 		(lpoly percent_correctt provider_age1 if countrycode== 1, bwidth(1.2) lwidth(0.5))		///
 		(lpoly percent_correctt provider_age1 if countrycode== 2, bwidth(1.2) lwidth(0.5))		///
 		(lpoly percent_correctt provider_age1 if countrycode== 3, bwidth(1.2) lwidth(0.5))		///
@@ -353,9 +354,9 @@ if $sectionB {
 		symx(4) size(small) c(1) ring(1) pos(3) region(lc(none) fc(none))) 									
 	graph export "$VG_out/figs/treat_scatter_age.png", width(2000) replace
 }
-
+ 
 /****************************************************************************
- 			Create scatter line graph for provider knowledge  
+ 			Create scatter line graph for treatment accuracy   
 *****************************************************************************/
 if $sectionC {	
 	
@@ -375,7 +376,7 @@ if $sectionD {
 		
 	replace provider_age1 = . if provider_age1>80 | provider_age1<=19
 	
-	tw  (histogram provider_age1, freq bin(12) lw(med) lc(gs13) fc(gs16) gap(10) yaxis(2)) || ///
+	tw  (histogram provider_age1, freq bin(12) lw(med) lc(gs14) fc(gs14) gap(10) yaxis(2)) || ///
 		(lpoly theta_mle provider_age1 if countrycode== 1, bwidth(1.2) lwidth(0.5))		///
 		(lpoly theta_mle provider_age1 if countrycode== 2, bwidth(1.2) lwidth(0.5))		///
 		(lpoly theta_mle provider_age1 if countrycode== 3, bwidth(1.2) lwidth(0.5))		///
@@ -403,5 +404,20 @@ if $sectionD {
 	graph export "$VG_out/figs/treat_knowledge_score.png", width(2000) replace
 	
 }	
+
+/****************************************************************************
+ 			Create scatter line graph for diagnostic knowledge   
+*****************************************************************************/
+if $sectionE {	
+	
+	lpoly percent_correctd theta_mle, ///
+			degree(1) jitter(10) m(x) mc(black%10) lineopts(lw(thick)) graphregion(color(white)) 								///
+			title("Percent of Conditions Diagnosed Correctly", size(medium) justification(left) color(black) span pos(11)) 		///
+			xtitle("Provider's knowledge score {&rarr}", placement(left) justification(left)) xscale(titlegap(2))	 			///
+			ylab(0 "0" 20 "20%" 40 "40%" 60 "60%" 80 "80%" 100 "100%", angle(0) nogrid) yscale(noli) bgcolor(white) ytitle("") 	///
+			xlabel(-5 (1) 5) xscale(noli) note("")																				   
+	graph export "$VG_out/figs/diag_scatter_knowledge.png", width(2000) replace	
+}
+
 	
 **************************************** End of do-file ************************************************

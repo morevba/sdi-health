@@ -12,15 +12,15 @@
        ** IDS VAR: country year unique_id 
        ** NOTES:
        ** WRITTEN BY:			Michael Orevba
-       ** Last date modified: 	May 24th 2021
+       ** Last date modified: 	June 1st 2021
 	   
  *************************************************************************/
  
 		//Sections
-		global sectionA 	1 // box plot  		- provider cadre & knowledge score 
-		global sectionB 	1 // box plot  		- provider knowledge score 
+		global sectionA 	0 // box plot  		- provider cadre & knowledge score 
+		global sectionB 	0 // box plot  		- provider knowledge score 
 		global sectionC 	1 // box plot  		- medical qualification 
-		global sectionD 	1 // scatter plot  	- provider cadre & knowledge score
+		global sectionD 	0 // scatter plot  	- provider cadre & knowledge score
 	
 /*****************************
 			Vignettes   
@@ -299,14 +299,13 @@ if $sectionA {
 		box(3, fcolor(none) lcolor(navy*1.3)) 																///
 		graphregion(color(white)) ytitle(, placement(left) justification(left)) ylabel(, angle(0) nogrid) 	///
 		legend(label(1 "Doctor") label(2 "Nurse") label(3 "Para-Professional") 								///
-		order(1 2 3) pos(11) ring(0) cols(1) region(lwidth(0.2) fc(none)) symx(4) symy(2) size(vsmall)) 	///
-		yscale(range(-3 3) titlegap(2)) bgcolor(white) asyvars showyvars horizontal 						///
-		ylabel(-3 "-3" -1 "-1" 0 "0" 1 "1" 3 "3" , labsize(small)) 											///
-		yline(`ken_med', lwidth(0.3) lcolor(green) lpattern(dash)) 											///
+		order(1 2 3) pos(4) ring(0) cols(1) region(lwidth(0.2) fc(none)) symx(4) symy(2) size(tiny)) 		///
+		yscale(range(-3 3) titlegap(2)) bgcolor(white) asyvars showyvars horizontal  ysize(6)				///
+		ylabel(-3 "-3" -2 "-2" -1 "-1" 0 "0" 1 "1" 2 "2" 3 "3" , labsize(small)) 							///
+		yline(`ken_med', lwidth(0.3) lcolor(black) lpattern(dash)) 											///
 		ytitle("Provider knowledge score {&rarr}", size(small)) allcategories	note("")							
-	graph export "$VG_out/figs/cadre_knowledge.png", replace as(png)	
+	graph export "$VG_out/figs/cadre_knowledge.png", replace as(png)		  
 
-	 
 	*Create local od knowledge score based on Kenya Nurses 2012 
 	summarize  	theta_mle if cy == "KEN_2012" & provider_cadre1 == 3, d
 	local 		ken_med  = `r(p50)' 
@@ -343,11 +342,15 @@ if $sectionA {
 		graph export "$VG_out/figs/cadre_knowledge_bar.png", replace as(png)	
 	restore 	
 }		
-  
+   
 /****************************************************************************
  			Create box plot for knowledge score 	
 *****************************************************************************/			
 if $sectionB {	
+	
+	*Create local od knowledge score based on Kenya Nurses 2012 
+	summarize  	theta_mle if cy == "KEN_2012" & provider_cadre1 == 3, d
+	local 		ken_med  = `r(p50)' 
 	 	
 	graph box theta_mle, ///
 		over(countrycode, sort(1) descending axis(noli) relabel(`crt_name2') label(labsize(small)))		///
@@ -364,13 +367,13 @@ if $sectionB {
 		box(11, fcolor(none) lcolor(purple) lwidth(0.4)) marker(11, msize(vsmall) mcolor(purple)) 		///
 		box(12, fcolor(none) lcolor(red) lwidth(0.4)) marker(12, msize(vsmall) mcolor(red)) 			///
 		box(13, fcolor(none) lcolor(brown) lwidth(0.4)) marker(13, msize(vsmall) mcolor(brown)) 		///
-		yline(0, lwidth(0.3) lcolor(gs12) lpattern(dash)) 												///
+		yline(`ken_med', lwidth(0.3) lcolor(black) lpattern(dash))  									///
 		ylabel(-5(1)5, labsize(small) angle(0) nogrid) 													///
 		ytitle("Provider's knowledge score {&rarr}", placement(left) justification(left) size(small)) 	///
 		legend(off) yscale(range(-5 5) titlegap(2)) bgcolor(white) graphregion(color(white)) asyvars 	///
 		showyvars horizontal																			
 	graph export "$VG_out/figs/prov_knowledge.png", replace as(png)	
-}
+} 
 
 /****************************************************************************
  			Create box plot for medical education  	
@@ -396,12 +399,12 @@ if $sectionC {
 		box(3, fcolor(none) lcolor(navy*0.9)) box(4, fcolor(none) lcolor(navy*1.3)) 						///
 		title(, size(medium) justification(left) color(black) span pos(11)) 								///
 		graphregion(color(white)) ytitle(, placement(left) justification(left)) ylabel(, angle(0) nogrid) 	///
-		yscale(range(-3 3) titlegap(2)) bgcolor(white) asyvars showyvars horizontal 						///
-		ylabel(-3 "-3" -1 "-1" 0 "0" 1 "1" 3 "3" , labsize(small)) legend(off) 								///
-		yline(`ken_med', lwidth(0.3) lcolor(green) lpattern(dash)) 											///
+		yscale(range(-3 3) titlegap(2)) bgcolor(white) asyvars showyvars horizontal ysize(6)				///
+		ylabel(-3 "-3" -2 "-2" -1 "-1" 0 "0" 1 "1" 2 "2" 3 "3" , labsize(small)) legend(off) 				///
+		yline(`ken_med', lwidth(0.3) lcolor(black) lpattern(dash)) 											///
 		ytitle("Provider knowledge score {&rarr}", size(small)) note("")											
 	graph export "$VG_out/figs/prov_mededu.png", replace as(png)	
- 	
+	
 	*Create local od knowledge score based on Kenya Nurses 2012 
 	summarize  	theta_mle if cy == "KEN_2012" & provider_cadre1 == 3, d
 	local 		ken_med  = `r(p50)' 
@@ -423,7 +426,7 @@ if $sectionC {
 		*Drop missing observations 
 		drop if prov_frac == .		
 		drop if missing(provider_mededuc1)	
-	 
+	  
 		betterbar prov_frac, 																						///
 				over(provider_mededuc1) by(countrycode2) pct	scale(0.7) 											///
 				graphregion(color(white)) ytitle(, placement(left) justification(left)) 							///
@@ -432,14 +435,14 @@ if $sectionC {
 				order(1 2 3 4) pos(1) ring(0) cols(1) region(lwidth(0.2) fc(none)) symx(4) symy(2) size(vsmall)) 	///
 				yscale(range(0 3) titlegap(2)) bgcolor(white) yscale(noli) xscale(noli)								///
 				barcolor(navy*0.3 navy*0.6 navy*0.9 navy*1.3)  														///
-				ylabel(41 "Togo" 29 "Tanzania 2014" 149 "Guinea Bissau" 137 "Kenya 2012" 							///
-						17 "Tanzania 2016" 125 "Kenya 2018" 5 "Uganda" 113 "Madagascar" 							///
-						101 "Mozambique" 89 "Malawi" 77 "Niger" 65 "Nigeria" 53 "Sierra Leone"						///
-						, labsize(med) angle(0) nogrid) xtitle("Share of Providers {&rarr}", size(small))
-		graph export "$VG_out/figs/prov_mededu_bar.png", replace as(png)	 	
+				ylabel(36.5 "Togo" 21.5 "Tanzania 2014" 156.5 "Guinea Bissau" 				 						///
+					   6.5 "Tanzania 2016" 141.5 "Kenya 2018"  126.5 "Madagascar" 									///
+					  111.5 "Mozambique" 96.5 "Malawi" 81.5 "Niger" 66.5 "Nigeria" 51.5 "Sierra Leone"				///
+					,labsize(med) angle(0) nogrid) xtitle("Share of Providers {&rarr}", size(small))
+		graph export "$VG_out/figs/prov_mededu_bar.png", replace as(png) 
 	restore 	
 }
- 
+   
 /****************************************************************************
  			Create scatter plot for provider cadre & knowledge score 	
 *****************************************************************************/	

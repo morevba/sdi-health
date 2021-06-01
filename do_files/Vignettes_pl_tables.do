@@ -265,7 +265,7 @@ if $sectionA {
 	"Other profession& 	 		{`L1r'}&	{`L2r'}&  {`L3r'}&  {`L4r'}&	{`L5r'}&	{`L6r'}\\" _n ///
 	"&   {""}\\" _n ///
 	"Advanced med.&  			{`M1r'}&	{`M2r'}&  {`M3r'}&  {`M4r'}&	{`M5r'}&	{`M6r'}\\" _n ///
-	"diploma&  					{`N1r'}&	{`N2r'}&  {`N3r'}&  {`N4r'}&	{`N5r'}&	{`N6r'}\\" _n ///
+	"Diploma&  					{`N1r'}&	{`N2r'}&  {`N3r'}&  {`N4r'}&	{`N5r'}&	{`N6r'}\\" _n ///
 	"Certificate&  				{`O1r'}&	{`O2r'}&  {`O3r'}&  {`O4r'}&	{`O5r'}&	{`O6r'}\\" _n ///
 	"\hline" _n ///
 	"\end{tabular}"

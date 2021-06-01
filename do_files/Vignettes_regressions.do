@@ -59,6 +59,17 @@
 	replace 	provider_cadre = 3 if provider_cadre1 == 3
 	lab define  prov_lab 1 "Other" 2 "Doctor" 3 "Nurse"
 	label val 	provider_cadre prov_lab
+	
+	*Create medical education binaries 
+	gen 		advanced	= 	(provider_mededuc1 ==4)
+	replace 	advanced  	= . if missing(provider_mededuc1)
+	label var	advanced	"Advanced"
+	gen 		diploma 	= 	(provider_mededuc1 ==3)
+	replace 	diploma  	= . if missing(provider_mededuc1)
+	label var	diploma		"Diploma"
+	gen 		certificate = 	(provider_mededuc1 ==2)
+	replace 	certificate = . if missing(provider_mededuc1)
+	label var	certificate	"Certificate"
 	 
 /*************************************************************************
 			Correct diagnosis 
@@ -136,15 +147,15 @@
 	gen 		countryfac_id = countrycode + "_" + facility_id
  
 	*Run regressions and save regression estimates 
-	reg 	theta_mle i.provider_cadre provider_age1, vce(cluster survey_id)
+	reg 	theta_mle i.provider_cadre provider_age1 advanced diploma certificate, vce(cluster survey_id)
 	eststo 	theta_mle1
 	estadd  local hascout	"No"
 	
-	reg 	theta_mle i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, vce(cluster survey_id)
+	reg 	theta_mle i.provider_cadre provider_age1 advanced diploma certificate i.facility_level_rec i.rural_rec i.public_rec, vce(cluster survey_id)
 	eststo 	theta_mle2
 	estadd  local hascout	"No"
 	
-	areg 	theta_mle i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, ab(countrycode) cluster(survey_id)
+	areg 	theta_mle i.provider_cadre provider_age1 advanced diploma certificate i.facility_level_rec i.rural_rec i.public_rec, ab(countrycode) cluster(survey_id)
 	eststo 	theta_mle3
 	estadd  local hascout	"Yes"
     
@@ -153,7 +164,9 @@
 *****************************************************************************
 
 	*Keep only the variables needed for the regression analysis 
-	keep countrycode survey_id countryfac_id diag* treat* provider_cadre provider_age1 facility_level_rec rural_rec public_rec
+	keep countrycode survey_id countryfac_id diag* treat* provider_cadre	///
+		 provider_age1 facility_level_rec rural_rec public_rec advanced 	///
+		 diploma certificate
  
 	drop treat_guidelines* treat_accuracy treat_observed /// these variables are not needed 
 		 diag_accuracy treat_guidedate 
@@ -170,27 +183,27 @@
 	replace treat 	= 1 if treat==100
 
 	*Run regressions and save regression estimates 
-	reg 	treat i.provider_cadre provider_age1, vce(cluster survey_id)
+	reg 	treat i.provider_cadre provider_age1 advanced diploma certificate, vce(cluster survey_id)
 	eststo 	treat1
 	estadd  local hascout	"No"
 	
-	reg 	treat i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec,  vce(cluster survey_id)
+	reg 	treat i.provider_cadre provider_age1 advanced diploma certificate i.facility_level_rec i.rural_rec i.public_rec,  vce(cluster survey_id)
 	eststo 	treat2
 	estadd  local hascout	"No"
 	
-	areg 	treat i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, ab(countrycode) cluster(survey_id)
+	areg 	treat i.provider_cadre provider_age1 advanced diploma certificate i.facility_level_rec i.rural_rec i.public_rec, ab(countrycode) cluster(survey_id)
 	eststo 	treat3
 	estadd  local hascout	"Yes"
 	
-	reg 	diag i.provider_cadre provider_age1, vce(cluster survey_id)
+	reg 	diag i.provider_cadre provider_age1 advanced diploma certificate, vce(cluster survey_id)
 	eststo 	diag1
 	estadd  local hascout	"No"
 	
-	reg	diag i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, vce(cluster survey_id)
+	reg	diag i.provider_cadre provider_age1 advanced diploma certificate i.facility_level_rec i.rural_rec i.public_rec, vce(cluster survey_id)
 	eststo 	diag2
 	estadd  local hascout	"No"
 	
-	areg	diag i.provider_cadre provider_age1 i.facility_level_rec i.rural_rec i.public_rec, ab(countrycode) cluster(survey_id)
+	areg	diag i.provider_cadre provider_age1 advanced diploma certificate i.facility_level_rec i.rural_rec i.public_rec, ab(countrycode) cluster(survey_id)
 	eststo 	diag3
 	estadd  local hascout	"Yes"
 
