@@ -24,7 +24,7 @@
 ******************************/	
 	
 	*Open vignettes dataset 
-	use "$VG_dtFin/Vignettes_pl.dta", clear   
+	use "$VG_dtFin/Vignettes_construct.dta", clear   
 	
 /**********************************************************
 				Facility & Provider Characteristics 
@@ -35,120 +35,6 @@
 			provider_cadre1 provider_mededuc1 provider_male1 cy ///
 			skip_* *_history_* *_exam_* *_test_* diag* treat*	///
 			tb_antibio diar_antibio
-			
-/*************************************************************************
-			Correct diagnosis 
-***************************************************************************/
-
-	egen 	num_answered = rownonmiss(diag1-diag7)
-	lab var num_answered "Number of vignettes that were done"
-
-	egen 	num_correctd = rowtotal(diag1-diag7)
-	replace num_correctd = num_correctd/100
-	gen 	percent_correctd = num_correctd/num_answered * 100
-	lab var num_correctd "Number of conditions diagnosed correctly"
-	lab var percent_correctd "Fraction of conditions diagnosed correctly"
-
-/**************************************************************************
-			Correct treatment 
-***************************************************************************/
-
-	//Adjust variable to go from 0 to 100
-		foreach z of varlist treat1 - treat7 {
-			replace `z' = `z' * 100
-			lab val `z' vigyesnolab
-		}
-
-	egen	num_treated = rownonmiss(treat1 - treat7)
-	lab var num_treated "Number of vignettes that had treatment coded"
-
-	egen 	num_correctt = rowtotal(treat1 - treat7)
-	replace num_correctt = num_correctt/100
-	gen 	percent_correctt = num_correctt/num_treated * 100
-	lab var num_correctt "Number of conditions treated correctly"
-	lab var percent_correctt "Fraction of conditions treated correctly"			
-			
-/**********************************************************************
-				Incorrect antibiotics 
-***********************************************************************/
-
-	*Adjust variable to go from 0 to 100	
-		foreach z of varlist tb_antibio diar_antibio {
-			replace `z' = `z' * 100
-			lab val `z' vigyesnolab
-		}	
-
-	egen 	num_antibiotics = rownonmiss(tb_antibio diar_antibio)
-	lab var num_antibiotics "Number of vignettes where incorrect antibiotics could be prescribed"
-
-	egen 	num_antibiotict = rowtotal(tb_antibio diar_antibio)
-	replace num_antibiotict = num_antibiotict/100
-	gen 	percent_antibiotict = num_antibiotict/num_antibiotics * 100
-	lab var num_antibiotict "Number of conditions where incorrect antiobiotics were prescribed"
-	lab var percent_antibiotict "Fraction of conditions where incorrect antiobiotics were prescribed"				
-			
-****************************************************************************
-/* Create measures of effort (questions, exams, tests) */
-*****************************************************************************
-	
-	local diseases = ""
-	foreach v of varlist skip_* {
-		local dis = substr("`v'", 6, .)
-		sum `v'
-		if `r(N)' != 0 {
-			local diseases = `" "`dis'" `diseases' "'
-		}
-	}
-
-	foreach disease in `diseases' {
-		cap unab vhist : `disease'_history_*
-		if "`vhist'" != "" {
-			display "`counter'"
-			egen `disease'_questions = rownonmiss(`disease'_history_*)
-			egen `disease'_questions_num = anycount(`disease'_history_*), val(1)
-			replace `disease'_questions = . if skip_`disease'==1 | skip_`disease'==. | `disease'_questions==0
-			replace `disease'_questions_num = . if skip_`disease'==1 | skip_`disease'==. | `disease'_questions==0 | `disease'_questions==.
-
-			lab var `disease'_questions "Number of possible `disease' history questions in survey" 
-			lab var `disease'_questions_num "Number of `disease' history questions asked"
-		}
-		local vhist = ""
-		
-		cap unab vtest : `disease'_test_*
-		if "`vtest'" != "" {
-			egen `disease'_tests = rownonmiss(`disease'_test_*) 
-			egen `disease'_tests_num = anycount(`disease'_test_*), val(1)
-			gen `disease'_tests_frac = `disease'_tests_num/`disease'_tests * 100
-			replace `disease'_tests = . if skip_`disease'==1 | skip_`disease'==. | `disease'_tests==0
-			replace `disease'_tests_num = . if skip_`disease'==1 | skip_`disease'==. | `disease'_tests==0 | `disease'_tests==.
-			replace `disease'_tests_frac = . if skip_`disease'==1 | skip_`disease'==. | `disease'_tests==0 | `disease'_tests==.
-
-			lab var `disease'_tests "Number of possible `disease' tests in survey"
-			lab var `disease'_tests_num  "Number of `disease' tests run"
-			lab var `disease'_tests_frac "Fraction of possible `disease' tests that were run"
-		}
-		local vtest = ""
-
-		cap unab vexam : `disease'_exam_*
-		if "`vexam'" != "" {
-			egen `disease'_exams = rownonmiss(`disease'_exam_*)
-			egen `disease'_exams_num = anycount(`disease'_exam_*), val(1)
-			replace `disease'_exams = . if skip_`disease'==1 | skip_`disease'==. | `disease'_exams==0
-			replace `disease'_exams_num = . if skip_`disease'==1 | skip_`disease'==. | `disease'_exams==0 | `disease'_exams==.
-
-			lab var `disease'_exams "Number of possible `disease' physical exams in survey"
-			lab var `disease'_exams_num "Number of `disease' physical exams done"
-		}
-		local vexam = ""
-	}
-	
-	*Create variables needed for table 
-	egen 	total_questions		= rowtotal(*_questions_num)
-	egen 	total_exams 		= rowtotal(*_exams_num)
-	egen	total_tests 		= rowtotal(*_tests_num)
-	lab var total_questions 	"Total number of history questions asked across all vignettes"
-	lab var total_exams 		"Total number of physical exams done across all vignettes"
-	lab var total_tests			"Total number of tests run all vignettes"
 
 /******************************************************************************
 			Table of descriptive stats of providers 
