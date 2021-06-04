@@ -80,6 +80,19 @@
 	replace 	certificate = . if missing(provider_mededuc1)
 	label var	certificate	"Certificate"
 	
+	*Create facility level binaries 
+	gen 	hospital  = (facility_level ==1)
+	gen 	health_ce = (facility_level ==2)
+	gen 	health_po = (facility_level ==3)
+	
+	*Create provider cadre binaries 
+	gen 	doctor	= 	(provider_cadre1 ==1)
+	replace doctor  = . if missing(provider_cadre1) 
+	gen 	nurse 	= 	(provider_cadre1 ==3)
+	replace nurse  	= . if missing(provider_cadre1)
+	gen 	other 	= 	(provider_cadre1 ==4)
+	replace other 	= . if missing(provider_cadre1)
+	
 	*Encode country 
 	encode cy, gen(countrycode)
 	
