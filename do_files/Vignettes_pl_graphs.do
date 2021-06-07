@@ -17,10 +17,10 @@
  *************************************************************************/
  
 		//Sections
-		global sectionA 	0 // box plot  		- provider cadre & knowledge score 
-		global sectionB 	0 // box plot  		- provider knowledge score 
+		global sectionA 	1 // box plot  		- provider cadre & knowledge score 
+		global sectionB 	1 // box plot  		- provider knowledge score 
 		global sectionC 	1 // box plot  		- medical qualification 
-		global sectionD 	0 // scatter plot  	- provider cadre & knowledge score
+		global sectionD 	1 // scatter plot  	- provider cadre & knowledge score
 	
 /*****************************
 			Vignettes   
