@@ -262,4 +262,4 @@
 *Open vignettes dataset 
 save "$VG_dtFin/Vignettes_construct.dta", replace    
 		
-	
+************************************* End of do-file ******************************************************	
